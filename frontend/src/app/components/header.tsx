@@ -1,21 +1,77 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { MdHome } from "react-icons/md";
+import { FaTicketSimple } from "react-icons/fa6";
+import { GiPodiumWinner } from "react-icons/gi";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export function Header() {
   return (
     <div className="bg-black w-full h-20 z-10 border-b-[0.5px] border-gray-600 flex px-4 justify-between">
-      <div className="flex items-center ">
-        <Image src="/logo.png" alt="logo" width={40} height={40} />{" "}
-        <div className="text-[#b19155] ml-2">
-          <h1 className="font-extrabold text-xl">Dream Car Live</h1>
-          <h1 className="font-extrabold text-xl ml-3">Online shop</h1>
+      <Link href="/" className="flex items-center">
+        <div className="flex items-center">
+          <Image src="/logo.png" alt="logo" width={60} height={60} />
+          <div className="text-[#b19155] ml-2">
+            <h1 className="font-extrabold text-xl">Dream Car Live</h1>
+            <h1 className="font-extrabold text-xl ml-3">Online shop</h1>
+          </div>
         </div>
-      </div>
+      </Link>
 
-      <div className="flex flex-col justify-center cursor-pointer space-y-1">
-        <span className="w-5 h-0.5 bg-[#b19155] rounded-md"></span>
-        <span className="w-5 h-0.5 bg-[#b19155] rounded-md"></span>
-        <span className="w-5 h-0.5 bg-[#b19155] rounded-md"></span>
-      </div>
+      <Sheet>
+        <SheetTrigger asChild>
+          <div>
+            <Button variant="outline" className="bg-black border-0">
+              <div className="flex flex-col justify-center cursor-pointer space-y-1 mt-10">
+                <span className="w-7 h-1 bg-[#b19155] rounded-md"></span>
+                <span className="w-7 h-1 bg-[#b19155] rounded-md"></span>
+                <span className="w-7 h-1 bg-[#b19155] rounded-md"></span>
+              </div>
+            </Button>
+          </div>
+        </SheetTrigger>
+
+        <SheetContent>
+          <div className="flex flex-col mt-20 gap-4 mr-3 ml-3">
+            <Link href="/" className="group">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+                <MdHome className="w-8 h-8 text-[#b19155] group-hover:text-black transition-colors duration-300" />
+                <h1 className="text-xl font-semibold text-[#b19155] group-hover:text-black transition-colors duration-300">
+                  Нүүр хуудас
+                </h1>
+              </div>
+            </Link>
+
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+              <FaTicketSimple className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+              <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                Сугалаанууд
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+              <GiPodiumWinner className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+              <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                Ялагчид
+              </h1>
+            </div>
+          </div>
+
+          {/* <SheetFooter>
+            <Button type="submit">Save changes</Button>
+            <SheetClose asChild>
+              <Button variant="outline">Close</Button>
+            </SheetClose>
+          </SheetFooter> */}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
