@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export function Section2() {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/api/lottery")
+    fetch("/api/lottery")
       .then((res) => res.json())
       .then((data) => setData(data));
   }, []);
