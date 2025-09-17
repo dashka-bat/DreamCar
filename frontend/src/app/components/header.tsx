@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MdHome } from "react-icons/md";
 import { FaTicketSimple } from "react-icons/fa6";
 import { GiPodiumWinner } from "react-icons/gi";
+import { FaBookMedical } from "react-icons/fa";
 import {
   Sheet,
   SheetClose,
@@ -60,6 +61,12 @@ export function Header() {
               <GiPodiumWinner className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
               <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
                 Ялагчид
+              </h1>
+            </div>
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+              <FaBookMedical className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+              <h1 className="text-md font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                Сугалаа авах заавар
               </h1>
             </div>
           </div>
