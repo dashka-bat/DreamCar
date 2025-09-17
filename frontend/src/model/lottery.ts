@@ -10,13 +10,17 @@ export interface ILottery extends Document {
   endedAt: Date;
   price: number;
   totalNumber: number;
-  soldNumber: number;
+  soldNumber?: number;
   active: boolean;
+  participants?: {
+  phoneNumber: string;
+  ticketNumber: string;
+  }[];
   winners?: {
     name: string;
     ticketNumber: string;
     description: string;
-    img?: string;
+    img?: string[];
     URL?: string;
   }[];
 }
@@ -30,14 +34,18 @@ const LotterySchema: Schema<ILottery> = new Schema({
   endedAt: { type: Date, required: true },
   price: { type: Number, required: true },
   totalNumber: { type: Number, required: true },
-  soldNumber: { type: Number, required: true },
+  soldNumber: { type: Number, default: 0 },
   active: { type: Boolean, required: true },
+    participants: [ {
+    phoneNumber: { type: String, required: true },
+    ticketNumber: { type: String, required: true },
+  } ],
   winners: [
     {
       name: { type: String, required: true },
       ticketNumber: { type: String, required: true },
       description: { type: String, required: true },
-      img: { type: String },
+       img: [{ type: String }],
       URL: { type: String },
     },
   ],

@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import Lottery from '@/model/lottery';
+import { nanoid } from 'nanoid';
 
 
 export async function POST(request: Request) {
@@ -9,24 +10,24 @@ export async function POST(request: Request) {
     await connectToDatabase();
 
     const data = await request.json();
-    const { id, name, createdAt, endedAt, price, totalNumber, soldNumber, active, winners } = data;
+    const {  name, createdAt, endedAt, price, totalNumber, active, winners } = data;
 
-    if (!id || !name || !createdAt || !endedAt || price === undefined || totalNumber === undefined || soldNumber === undefined || active === undefined) {
+    if ( !name || !createdAt || !endedAt || price === undefined || totalNumber === undefined  || active === undefined) {
       return NextResponse.json(
-        { message: 'Missing required fields: id, name, createdAt, endedAt, price, totalNumber, soldNumber, active' },
+        { message: 'Missing required fields:  name, createdAt, endedAt, price, totalNumber, active' },
         { status: 400 }
       );
     }
 
     const newLottery = new Lottery({
-      id,
+      id : nanoid(),
       name,
       createdAt: new Date(createdAt),
       endedAt: new Date(endedAt),
       price,
       totalNumber,
-      soldNumber,
       active,
+      participants: [],
       description: data.description || '',
       img: data.img || [],
       winners: winners || [],
