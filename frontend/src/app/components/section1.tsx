@@ -6,7 +6,7 @@ export function Section1() {
       <h1 className="text-[32px] text-black ">Автомашины Сугалаа</h1>
       <h2 className="text-md mt-2 text-black mb-6 self-center text-[22px]">
         Та мөрөөдлийн машинаа
-        <h2>Xүлээн авах боломжтой</h2>
+        <div>Xүлээн авах боломжтой</div>
       </h2>
 
       <Marquee className="gap-44">
