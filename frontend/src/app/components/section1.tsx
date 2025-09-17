@@ -2,18 +2,18 @@ import Image from "next/image";
 import Marquee from "react-fast-marquee";
 export function Section1() {
   return (
-    <div className="mt-8 flex flex-col jutsify-center items-center">
-      <h1 className="text-[32px] text-black ">Автомашины Сугалаа</h1>
-      <h2 className="text-md mt-2 text-black mb-6 self-center text-[22px]">
+    <div className="mt-8 flex flex-col jutsify-center items-center bg-black">
+      <h1 className="text-[32px]  text-[#b19155] ">Автомашины Сугалаа</h1>
+      <h2 className="text-md mt-2  text-[#b19155] mb-6 self-center text-[22px]">
         Та мөрөөдлийн машинаа
-        <h2>Xүлээн авах боломжтой</h2>
+        <div>Xүлээн авах боломжтой</div>
       </h2>
 
       <Marquee className="gap-44">
         <Image width={300} height={100} src={"/1.png"} alt=""></Image>
-        <Image width={300} height={100} src={"/2.png"} alt=""></Image>
-        <Image width={300} height={100} src={"/3.png"} alt=""></Image>
         <Image width={300} height={100} src={"/4.png"} alt=""></Image>
+        <Image width={300} height={100} src={"/3.png"} alt=""></Image>
+        <Image width={300} height={100} src={"/2.png"} alt=""></Image>
         <Image width={300} height={100} src={"/5.png"} alt=""></Image>
         <Image width={300} height={100} src={"/6.png"} alt=""></Image>
       </Marquee>
