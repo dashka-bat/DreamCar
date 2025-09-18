@@ -21,8 +21,6 @@ export default function LotteryDetailPage() {
   const [lottery, setLottery] = useState<Lottery | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-
-  // Зураг upload хийх функц
   const handleUpload = async (input: HTMLInputElement) => {
     try {
       if (input.files && input.files.length > 0) {
@@ -49,7 +47,7 @@ export default function LotteryDetailPage() {
       }
     } catch (error) {
       console.error("Error uploading image:", error);
-      alert("Failed to upload image. Please try again.");
+      alert("Зургийг байршуулж чадсангүй. Дахин оролдоно уу.");
     }
   };
 
@@ -93,10 +91,10 @@ export default function LotteryDetailPage() {
       if (!res.ok) throw new Error("Failed to update lottery");
       const updated = await res.json();
       setLottery(updated);
-      alert("Lottery updated successfully!");
+      alert("Сугалаа амжилттай шинэчлэгдсэн!");
     } catch (error) {
       console.error(error);
-      alert("Failed to save changes");
+      alert("Өөрчлөлтүүдийг хадгалж чадсангүй");
     } finally {
       setSaving(false);
     }
@@ -107,12 +105,12 @@ export default function LotteryDetailPage() {
 
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
-      <h1 className="text-2xl font-bold mb-4">Edit Lottery</h1>
+      <h1 className="text-2xl font-bold mb-4">Сугалааг засварлах</h1>
 
       <div className="space-y-4">
         {/* Name */}
         <div>
-          <label className="block font-medium mb-1">Name</label>
+          <label className="block font-medium mb-1">Нэр</label>
           <input
             type="text"
             name="name"
@@ -122,9 +120,9 @@ export default function LotteryDetailPage() {
           />
         </div>
 
-        {/* Description */}
+        
         <div>
-          <label className="block font-medium mb-1">Description</label>
+          <label className="block font-medium mb-1">Тайлбар</label>
           <textarea
             name="description"
             value={lottery.description || ""}
@@ -135,7 +133,7 @@ export default function LotteryDetailPage() {
 
         {/* Images */}
         <div>
-          <label className="block font-medium mb-1">Images</label>
+          <label className="block font-medium mb-1">Зурагнууд</label>
           <input
             type="file"
             name="img"
@@ -167,7 +165,7 @@ export default function LotteryDetailPage() {
         {/* Dates */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block font-medium mb-1">Created At</label>
+            <label className="block font-medium mb-1">Үүсгэсэн хугацаа</label>
             <input
               type="date"
               name="createdAt"
@@ -178,7 +176,7 @@ export default function LotteryDetailPage() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Ended At</label>
+            <label className="block font-medium mb-1">Дууцах хугацаа</label>
             <input
               type="date"
               name="endedAt"
@@ -188,11 +186,9 @@ export default function LotteryDetailPage() {
             />
           </div>
         </div>
-
-        {/* Price & Total Number */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block font-medium mb-1">Price</label>
+            <label className="block font-medium mb-1">Үнэ</label>
             <input
               type="number"
               name="price"
@@ -203,7 +199,7 @@ export default function LotteryDetailPage() {
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Total Number</label>
+            <label className="block font-medium mb-1">Нийт тоо</label>
             <input
               type="number"
               name="totalNumber"
@@ -213,8 +209,6 @@ export default function LotteryDetailPage() {
             />
           </div>
         </div>
-
-        {/* Active */}
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -223,16 +217,14 @@ export default function LotteryDetailPage() {
             onChange={handleChange}
             className="mr-2"
           />
-          <span>{lottery.active ? "Active" : "Inactive"}</span>
+          <span>{lottery.active ? "Идэвхитэй" : "Идэвхигүй"}</span>
         </div>
-
-        {/* Save Button */}
         <button
           onClick={handleSave}
           disabled={saving}
           className={`px-4 py-2 rounded text-white ${saving ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}`}
         >
-          {saving ? "Saving..." : "Save Changes"}
+          {saving ? "Хадгалж байна..." : "Хадгалах"}
         </button>
       </div>
     </div>

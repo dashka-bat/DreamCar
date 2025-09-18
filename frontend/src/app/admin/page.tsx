@@ -3,9 +3,16 @@
 import { useState, useEffect } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { PiRadioactive } from "react-icons/pi";
-import { TbRadioactiveFilled } from "react-icons/tb";
+import { TbRadioactiveFilled } from "react-icons/tb"
+import { IoIosGitPullRequest } from "react-icons/io";;
 import AllActiveLottery from "./components/all-active-lottery";
 import AllInactiveLottery from "./components/all-inactive-lottery";
+import { FaDeleteLeft } from "react-icons/fa6";
+import { RiDeleteBinLine } from "react-icons/ri";
+
+import { IoCloudUploadOutline } from "react-icons/io5";
+
+import Requests from "./components/requests";
 const correctPin = String(process.env.NEXT_PUBLIC_ADMIN_PIN);
 const PIN_TIMEOUT = 10 * 60 * 1000;
 
@@ -23,11 +30,11 @@ export default function AdminPage() {
     img: [] as string[],
     winners: [],
   });
-    const [pin, setPin] = useState("");
+  const [pin, setPin] = useState("");
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
-  
-   useEffect(() => {
+
+  useEffect(() => {
     const savedTime = localStorage.getItem("pinVerifiedAt");
     if (savedTime) {
       const elapsed = Date.now() - Number(savedTime);
@@ -39,7 +46,7 @@ export default function AdminPage() {
       }
     }
   }, []);
-    const handlePinSubmit = (e: React.FormEvent) => {
+  const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (pin === correctPin) {
       setIsAuthorized(true);
@@ -68,7 +75,7 @@ export default function AdminPage() {
     return () => clearInterval(interval);
   }, [isAuthorized]);
 
-    const formatTime = (seconds: number) => {
+  const formatTime = (seconds: number) => {
     const min = Math.floor(seconds / 60).toString().padStart(2, "0");
     const sec = (seconds % 60).toString().padStart(2, "0");
     return `${min}:${sec}`;
@@ -186,39 +193,46 @@ export default function AdminPage() {
   };
 
 
- 
+
   return (
-    <div className="flex">
-       
+    <div className="flex relative">
+
       <div className="fixed top-0 left-0 w-[100%] max-w-xs bg-white p-8 h-screen shadow z-40 pt-[120px]">
         <div className="flex flex-col justify-between h-full">
           <nav className="flex flex-col gap-6 text-sm text-gray-700">
             <button
               onClick={() => setActiveTab("add")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
-                activeTab === "add" ? "bg-gray-300" : "hover:bg-gray-200"
-              }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "add" ? "bg-gray-300" : "hover:bg-gray-200"
+                }`}
             >
               <CiCirclePlus className="w-7 h-7" /> Сугалаа оруулах
             </button>
 
             <button
               onClick={() => setActiveTab("active")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
-                activeTab === "active" ? "bg-gray-300" : "hover:bg-gray-200"
-              }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "active" ? "bg-gray-300" : "hover:bg-gray-200"
+                }`}
             >
               <PiRadioactive className="w-7 h-7 text-gray-400" /> Идэвхитэй сугалаа
             </button>
 
             <button
               onClick={() => setActiveTab("inactive")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
-                activeTab === "inactive" ? "bg-gray-300" : "hover:bg-gray-200"
-              }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "inactive" ? "bg-gray-300" : "hover:bg-gray-200"
+                }`}
             >
               <TbRadioactiveFilled className="w-7 h-7" /> Идэвхигүй сугалаа
             </button>
+            <button
+              onClick={() => setActiveTab("requests")}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "requests" ? "bg-gray-300" : "hover:bg-gray-200"
+                }`}
+            >
+              <IoIosGitPullRequest className="w-7 h-7" /> Хүсэлтүүд
+            </button>
+            <div className=" absolute bottom-5 font-semibold">
+              Улирал дуусахад: {formatTime(timeLeft)}
+            </div>
           </nav>
         </div>
       </div>
@@ -239,7 +253,7 @@ export default function AdminPage() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                  className="mt-1 block border-1  h-10 w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
                 />
               </div>
               <div>
@@ -249,7 +263,7 @@ export default function AdminPage() {
                   name="createdAt"
                   value={formData.createdAt}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                  className="mt-1 block w-full h-10   border-1 rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
                 />
               </div>
               <div>
@@ -259,7 +273,7 @@ export default function AdminPage() {
                   name="endedAt"
                   value={formData.endedAt}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                  className="mt-1 block h-10   border-1 w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
                 />
               </div>
               <div>
@@ -269,7 +283,7 @@ export default function AdminPage() {
                   name="price"
                   value={formData.price}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                  className="mt-1 block h-10   border-1 w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
                 />
               </div>
               <div>
@@ -279,7 +293,7 @@ export default function AdminPage() {
                   name="totalNumber"
                   value={formData.totalNumber}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                  className="mt-1 block w-full rounded-md border-gray-300 h-10   border-1 shadow-sm focus:border-black focus:ring-black"
                 />
               </div>
             </div>
@@ -291,32 +305,50 @@ export default function AdminPage() {
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                className="mt-1 h-10   border-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Зураг</label>
-              <input
-                type="file"
-                multiple
-                name="img"
-                onChange={handleChange}
-                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200"
-              />
-              {formData.img.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {formData.img.map((url, i) => (
-                    <img
-                      key={i}
-                      src={url}
-                      alt="Uploaded"
-                      className="w-20 h-20 object-cover rounded"
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+            <div >
+  <div className=" grid grid-cols-3  lg:gap-2 relative">
+    {formData.img.map((url, i) => (
+      <div key={i} className="relative xl:w-75 lg:w-50 w-80 h-50">
+        <img
+          src={url}
+          alt="Uploaded"
+          className="w-full h-full object-fill rounded"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            setFormData(prev => ({
+              ...prev,
+              img: prev.img.filter((_, index) => index !== i),
+            }));
+          }}
+          className="absolute top-1 right-1 bg-red-500 cursor-pointer text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+        >
+         <RiDeleteBinLine />
+
+        </button>
+      </div>
+    ))}
+    <label className="lg:w-50 xl:w-75 w-80 h-50 bg-gray-300 text-gray-700 cursor-pointer rounded flex items-center justify-center hover:bg-gray-400">
+      <IoCloudUploadOutline className="w-10 h-10" />
+      <input
+        type="file"
+        multiple
+        name="img"
+        onChange={handleChange}
+        className="hidden"
+      />
+    </label>
+  </div>
+</div>
+
+
+
+
 
             <div className="flex justify-end">
               <button
@@ -340,11 +372,14 @@ export default function AdminPage() {
             <AllInactiveLottery />
           </div>
         )}
+        {activeTab === "requests" && (
+          <div className="flex justify-center items-center">
+            <Requests />
+          </div>
+        )}
       </div>
-       <div className="mb-4 text-right font-semibold">
-        Улирал дуусахад: {formatTime(timeLeft)}
-      </div>
-    
+
+
     </div>
   );
 }

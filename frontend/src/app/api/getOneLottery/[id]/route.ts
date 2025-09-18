@@ -6,8 +6,6 @@ import Lottery from "@/model/lottery";
 export async function GET(request: Request, context: { params: any }) {
   try {
     await connectToDatabase();
-
-    // params-г await ашиглан авах
     const { id } = await context.params;
     if (!id) {
       return NextResponse.json({ message: "Lottery ID is required" }, { status: 400 });
