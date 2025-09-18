@@ -1,8 +1,20 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-
+type Lottery = {
+  id: number;
+  name: string;
+  description: string;
+  img: string;
+  price: number;
+  totalNumber: number;
+  soldNumber: number;
+  active: boolean;
+  endedAt: string;
+  createdAt: string;
+};
 export function Section2() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Lottery[]>([]);
   useEffect(() => {
     fetch("/api/lottery")
       .then((res) => res.json())
@@ -17,7 +29,7 @@ export function Section2() {
       {data.map((item: any) => (
         <div
           key={item.id}
-          className="bg-black rounded-lg w-[354px] h-[306px] mt-5 border-[0.5px] border-[#2E3A4B] p-4"
+          className="bg-black rounded-lg w-[354px] h-fit mt-5 border-[0.5px] border-[#2E3A4B] p-4"
         >
           <div className="flex justify-between">
             <h3 className="text-[#4ADE80]">
@@ -29,6 +41,16 @@ export function Section2() {
             {item.name}{" "}
           </h2>
           <h3 className="text-[#b19155]">{item.description}</h3>
+          {item.img.map((url: string, index: number) => (
+            <Image
+              key={index}
+              alt={`${item.name}-${index}`}
+              width={360}
+              height={100}
+              src={url}
+              className="rounded-lg"
+            />
+          ))}
           <div className="flex justify-between mt-5 px-4">
             {" "}
             <div className="flex flex-col justify-center items-center">
@@ -53,7 +75,7 @@ export function Section2() {
             </h3>
           </div>
           <button className="w-full self-center mt-2 px-4 py-6 h-10 bg-black text-[#b19155] flex justify-center items-center font-bold text-lg rounded-lg border-2 border-[#b19155]">
-            Тасалбар худалдаж авах
+            Сугалаа худалдаж авах
           </button>
         </div>
       ))}

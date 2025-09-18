@@ -8,48 +8,34 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+type Invoice = {
+  Дугаар: React.ReactNode;
+  paymentStatus: string;
+  totalAmount: string;
+  paymentMethod: string;
+};
+const number = [19483294];
 const invoices = [
   {
-    Дугаар: (
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-    ),
+    Дугаар: <h1>{number}</h1>,
     paymentStatus: "Paid",
     totalAmount: "$250.00",
     paymentMethod: "Credit Card",
   },
   {
-    Дугаар: (
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-    ),
+    Дугаар: <h1>{number}</h1>,
     paymentStatus: "Pending",
     totalAmount: "$150.00",
     paymentMethod: "PayPal",
   },
   {
-    Дугаар: (
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-    ),
+    Дугаар: <h1>{number}</h1>,
     paymentStatus: "Unpaid",
     totalAmount: "$350.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    Дугаар: (
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-    ),
+    Дугаар: <h1>{number}</h1>,
     paymentStatus: "Paid",
     totalAmount: "$450.00",
     paymentMethod: "Credit Card",
@@ -58,34 +44,38 @@ const invoices = [
 
 export function Section4() {
   return (
-    <Table className="bg-[#0F172A]">
-      {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px] text-white">profile</TableHead>
-          <TableHead className=" text-white">Status</TableHead>
-          <TableHead className=" text-white">Method</TableHead>
-          <TableHead className="text-right  text-white">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((Дугаар) => (
-          <TableRow key={Дугаар.totalAmount || null}>
-            <TableCell className="font-medium  text-white">
-              {Дугаар.Дугаар}
-            </TableCell>
-            <TableCell className=" text-white">
-              {Дугаар.paymentStatus}
-            </TableCell>
-            <TableCell className=" text-white">
-              {Дугаар.paymentMethod}
-            </TableCell>
-            <TableCell className="text-right  text-white">
-              {Дугаар.totalAmount}
-            </TableCell>
+    <>
+      <h1 className="text-[#b19155] text-center">Suulin yalagchud</h1>
+      <Table className="bg-black border-3 border-[#b19155] mt-4">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px] text-[#b19155]">Нэр</TableHead>
+            <TableHead className="text-[#b19155]">
+              Суглааны <h1>дугаар</h1>
+            </TableHead>
+            <TableHead className=" text-[#b19155]">Хонжвор</TableHead>
+            <TableHead className="text-right text-[#b19155]">Он сар</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {invoices.map((Дугаар: Invoice) => (
+            <TableRow key={Дугаар.totalAmount || null}>
+              <TableCell className="font-medium text-[#b19155]">
+                {Дугаар.Дугаар}
+              </TableCell>
+              <TableCell className="text-[#b19155]">
+                {Дугаар.paymentStatus}
+              </TableCell>
+              <TableCell className="text-[#b19155]">
+                {Дугаар.paymentMethod}
+              </TableCell>
+              <TableCell className="text-right  text-[#b19155]">
+                {Дугаар.totalAmount}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   );
 }
