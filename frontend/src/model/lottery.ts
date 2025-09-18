@@ -15,6 +15,7 @@ export interface ILottery extends Document {
   participants?: {
   phoneNumber: string;
   ticketNumber: string;
+  soldAt?: Date;
   }[];
   winners?: {
     name: string;
@@ -39,6 +40,7 @@ const LotterySchema: Schema<ILottery> = new Schema({
     participants: [ {
     phoneNumber: { type: String, required: true },
     ticketNumber: { type: String, required: true },
+    soldAt: { type: Date, required: false },
   } ],
   winners: [
     {

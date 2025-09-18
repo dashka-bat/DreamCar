@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import AddParticipant from "./add-participant";
 import { FaRegEdit } from "react-icons/fa";
-import { CiCirclePlus } from "react-icons/ci";
+import { CiCircleChevRight, CiCirclePlus } from "react-icons/ci";
 
 export default function AllInactiveLottery() {
     const [lotteries, setLotteries] = useState<any[]>([]);
@@ -24,7 +24,7 @@ export default function AllInactiveLottery() {
 
     return (
         <div>
-            <div className="mb-4">
+            <div className="mb-4 lg:ml-20">
                 <input
                     type="text"
                     placeholder="ID эсвэл нэрээр хайх..."
@@ -38,16 +38,16 @@ export default function AllInactiveLottery() {
                 {filteredLotteries.length === 0 ? (
                     <p className="text-center">Сугалаа олдсонгүй</p>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                    <div className="grid 2xl:grid-cols-2 xl-grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 lg:ml-20">
                         {filteredLotteries.filter((lottery: { active: boolean }) => lottery.active === false).map((lottery: any) => (
-                            <div key={lottery.id}>
+                            <div key={lottery.id} className="lg:w-[600px] relative">
                                 <div className="bg-white border border-gray-500 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                                     {lottery.img && lottery.img.length > 0 && (
-                                        <div className="h-48 w-full overflow-hidden">
+                                             <div className="w-full h-[400px] flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
                                             <img
                                                 src={lottery.img[0]}
                                                 alt={lottery.name}
-                                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                                className="max-w-full max-h-full object-contain"
                                             />
                                         </div>
                                     )}
@@ -98,6 +98,9 @@ export default function AllInactiveLottery() {
                                         Ялагч нэмэх
                                         </button>
                                  </a>
+                                  <div className="absolute top-[570px] left-[550px]">
+                                                                            <a href={`/admin/participants/${lottery.id}`}><CiCircleChevRight className="w-10 h-10 hover:text-blue-400" /></a>
+                                                                             </div>
                                 </div>
                             </div>
                         ))}
