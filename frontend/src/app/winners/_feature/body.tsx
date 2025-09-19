@@ -1,16 +1,21 @@
 "use client";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-
 type Winner = {
   id: string;
   name: string;
@@ -19,8 +24,7 @@ type Winner = {
   totalAmount: string;
   endedAt: string; // endedAt нэмсэн
 };
-
-export function Section4() {
+export function Body() {
   const [winners, setWinners] = useState<Winner[]>([]);
   useEffect(() => {
     fetch("/api/winner")
@@ -30,10 +34,8 @@ export function Section4() {
         setWinners(mergedWinners);
       });
   }, []);
-
   return (
-    <>
-      <h1 className="text-[#b19155] text-center">Сүүлийн ялагчид</h1>
+    <div className="w-[375px] min-h-screen flex justify-center bg-black">
       <Table className="bg-black border-2 border-[#b19155] mt-4 ">
         <TableHeader>
           <TableRow className="border-[#b19155]">
@@ -79,6 +81,6 @@ export function Section4() {
           })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 }

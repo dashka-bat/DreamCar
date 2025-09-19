@@ -5,13 +5,9 @@ import { MdHome } from "react-icons/md";
 import { FaTicketSimple } from "react-icons/fa6";
 import { GiPodiumWinner } from "react-icons/gi";
 import { FaBookMedical } from "react-icons/fa";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetFooter,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { DialogTitle } from "@/components/ui/dialog"; // DialogTitle импорт
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // VisuallyHidden импорт
 
 export function Header() {
   return (
@@ -39,44 +35,45 @@ export function Header() {
           </div>
         </SheetTrigger>
 
-        <SheetContent>
+        <SheetContent className="bg-black text-[#b19155] shadow-xl">
+          {/* Accessibility-д зориулсан DialogTitle */}
+          <DialogTitle>
+            <VisuallyHidden>Navigation Menu</VisuallyHidden>
+          </DialogTitle>
+
           <div className="flex flex-col mt-20 gap-4 mr-3 ml-3">
             <Link href="/" className="group">
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+              <div className="flex items-center border-2 border-[#b19155] gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
                 <MdHome className="w-8 h-8 text-[#b19155] group-hover:text-black transition-colors duration-300" />
                 <h1 className="text-xl font-semibold text-[#b19155] group-hover:text-black transition-colors duration-300">
                   Нүүр хуудас
                 </h1>
               </div>
             </Link>
+            <Link href="/lottery" className="group">
+              <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+                <FaTicketSimple className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+                <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                  Сугалаанууд
+                </h1>
+              </div>
+            </Link>
+            <Link href="/winners" className="group">
+              <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+                <GiPodiumWinner className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+                <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                  Ялагчид
+                </h1>
+              </div>
+            </Link>
 
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
-              <FaTicketSimple className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
-              <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
-                Сугалаанууд
-              </h1>
-            </div>
-
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
-              <GiPodiumWinner className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
-              <h1 className="text-xl font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
-                Ялагчид
-              </h1>
-            </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+            <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
               <FaBookMedical className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
               <h1 className="text-md font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
                 Сугалаа авах заавар
               </h1>
             </div>
           </div>
-
-          {/* <SheetFooter>
-            <Button type="submit">Save changes</Button>
-            <SheetClose asChild>
-              <Button variant="outline">Close</Button>
-            </SheetClose>
-          </SheetFooter> */}
         </SheetContent>
       </Sheet>
     </div>
