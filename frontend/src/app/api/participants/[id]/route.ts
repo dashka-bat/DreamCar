@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import Lottery from "@/model/lottery";
+import mongoose, { Mongoose } from "mongoose";
 
 interface Participant {
   phoneNumber: string;
@@ -40,5 +41,45 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error(error);
     return NextResponse.json({ message: "Server error", error: error.message }, { status: 500 });
+  }
+} 
+
+export async function GET(request: Request, context: { params: any }) {
+  try {
+    await connectToDatabase();
+
+ const { id } = await context.params;
+
+
+    if (!id) {
+      return new Response(
+        JSON.stringify({ message: "Missing lotteryId parameter" }),
+        { status: 400 }
+      );
+    }
+
+    const lottery = await Lottery.findOne({ id });
+
+    if (!lottery) {
+      return new Response(
+        JSON.stringify({ message: "Lottery not found" }),
+        { status: 404 }
+      );
+    }
+
+    return new Response(
+      JSON.stringify({ participants: lottery.participants || [] }),
+      { status: 200 }
+    );
+
+  } catch (error: any) {
+    console.error(error);
+    return new Response(
+      JSON.stringify({
+        message: "Server error",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
   }
 }

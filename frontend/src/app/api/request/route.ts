@@ -49,6 +49,12 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    if(quantity<=0){
+      return new Response(
+        JSON.stringify({ message: "Quantity must be greater than zero" }),
+        { status: 400 }
+      );
+    }
 
     const newRequest = new RequestModel({  phoneNumber, quantity, categoryId });
     const savedRequest = await newRequest.save();

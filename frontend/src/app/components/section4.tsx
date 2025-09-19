@@ -17,7 +17,7 @@ type Winner = {
   ticketNumber: string;
   description: string;
   totalAmount: string;
-  endedAt: string; // endedAt нэмсэн
+  endedAt: string; 
 };
 
 export function Section4() {

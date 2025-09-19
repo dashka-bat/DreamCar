@@ -9,7 +9,7 @@ interface Winner {
   description: string;
   img?: string[];
   URL?: string;
-  endedAt?: string; // 👈 шинэ талбар
+  endedAt?: Date; // 👈 шинэ талбар
 }
 
 export default function WinnerPlus() {
@@ -21,7 +21,7 @@ export default function WinnerPlus() {
     description: "",
     img: [],
     URL: "",
-    endedAt: "",
+    endedAt: undefined,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -100,7 +100,7 @@ export default function WinnerPlus() {
           description: "",
           img: [],
           URL: "",
-          endedAt: "",
+          endedAt: undefined,
         });
       }
     } catch (error: any) {
@@ -206,7 +206,13 @@ export default function WinnerPlus() {
         <input
           type="date"
           name="endedAt"
-          value={winner.endedAt}
+          value={
+            winner.endedAt
+              ? typeof winner.endedAt === "string"
+                ? winner.endedAt
+                : winner.endedAt.toISOString().slice(0, 10)
+              : ""
+          }
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
