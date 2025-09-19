@@ -43,7 +43,6 @@ export default function Winner() {
             </div>
         );
     }
-    console.log(winner.winners[0].name)
 
     return (
         <div className="flex justify-center bg-black">
@@ -78,7 +77,7 @@ export default function Winner() {
 
                 </div>
                 <div className="mt-5 w-[90%] border-b-[#b19155] border-b-1 ml-4">
-                    <h1 className="text-[#b19155] font-extrabold text-xl ml-3 pb-3 ">{winner.winners[0].name}</h1>
+                    <h1 className="text-[#b19155] font-extrabold text-xl ml-3 pb-3 ">{winner?.winners[0]?.name}</h1>
                 </div>
                 <div className="ml-4 mt-3">
                     <h1 className="text-[#b19155] font-extrabold text-[16px] ml-5 pb-3">Азтан болсон сугалааны дугаар: {winner.winners[0].ticketNumber}</h1>
@@ -91,7 +90,7 @@ export default function Winner() {
                 </div>
                 <div className="mt-5 w-[90%]  ml-4">
                     <div className="text-[#b19155] font-extrabold text-[16px] ml-5 pb-3">
-                        {winner.winners[0].description}
+                        {winner?.winners[0]?.description}
                         <br></br>
                         <br></br>
                         Сугалаа бүтээлцсэн та бүхэндээ талархая дараагийн машин таных болог
