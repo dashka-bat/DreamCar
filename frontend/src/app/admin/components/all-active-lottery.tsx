@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import AddParticipant from "./add-participant";
 import { FaRegEdit } from "react-icons/fa";
+import { CiCircleChevRight } from "react-icons/ci";
 
 export default function AllActiveLottery() {
     const [lotteries, setLotteries] = useState<any[]>([]);
@@ -13,8 +14,6 @@ export default function AllActiveLottery() {
             .then(data => setLotteries(data))
             .catch(err => console.error("Error fetching lotteries:", err));
     }, []);
-
-    // Search by ID or Name
     const filteredLotteries = lotteries.filter(lottery =>
         lottery.id.toLowerCase().includes(search.toLowerCase()) ||
         lottery.name.toLowerCase().includes(search.toLowerCase())
@@ -22,7 +21,7 @@ export default function AllActiveLottery() {
 
     return (
         <div>
-            <div className="mb-4">
+            <div className="mb-4 lg:ml-20">
                 <input
                     type="text"
                     placeholder="ID эсвэл нэрээр хайх..."
@@ -36,18 +35,20 @@ export default function AllActiveLottery() {
                 {filteredLotteries.length === 0 ? (
                     <p className="text-center">Сугалаа олдсонгүй</p>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                    <div className="grid 2xl:grid-cols-2    xl:grid-cols-1  lg:grid-cols-1 gap-4">
                         {filteredLotteries.filter((lottery: { active: boolean }) => lottery.active === true).map((lottery: any) => (
-                            <div key={lottery.id}>
+                            <div key={lottery.id} className="lg:w-[600px]  relative lg:ml-10">
                                 <div className="bg-white border border-gray-500 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                                     {lottery.img && lottery.img.length > 0 && (
-                                        <div className="h-48 w-full overflow-hidden">
+                                        <div className="w-full h-[400px] flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
                                             <img
                                                 src={lottery.img[0]}
                                                 alt={lottery.name}
-                                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                                className="max-w-full max-h-full object-contain"
                                             />
                                         </div>
+
+
                                     )}
                                     <div className="flex justify-between items-center">
 
@@ -86,17 +87,17 @@ export default function AllActiveLottery() {
                                                 {lottery.description || "No description provided."}
                                             </p>
 
-                                            <div>
-                                               
-                                                <AddParticipant id={lottery.id} />
-                                            </div>
+
                                         </div>
-                                        <div className="inline-flex items-center gap-2 px-4 py-2 mx-2  bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition-colors cursor-pointer">
+                                        <div className="inline-flex absolute top-[480px] left-[430px] items-center gap-2 px-4 py-2  mx-2  bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition-colors cursor-pointer">
                                             <FaRegEdit className="w-5 h-5" />
                                             <a href={`/admin/${lottery.id}`} className="hover:underline">
                                                 Засварлах
                                             </a>
                                         </div>
+                                        <div className="absolute top-[570px] left-[550px]">
+                                           <a href={`/admin/participants/${lottery.id}`}><CiCircleChevRight className="w-10 h-10 hover:text-blue-400" /></a>
+                                            </div>
 
                                     </div>
                                 </div>
