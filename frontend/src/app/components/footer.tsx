@@ -5,7 +5,7 @@ import { MdHome } from "react-icons/md";
 
 export function Footer() {
   return (
-    <div className="w-full h-[70px] bg-black">
+    <div className="w-full h-[70px] bg-black border-2 border-[#b19155]">
       <div className="flex justify-between items-center px-4 h-full">
         <Link href="/" className="flex items-center">
           <button className="flex flex-col items-center text-[#b19155] hover:text-[#ffd97a] hover:font-bold active:scale-95 transition duration-200">
@@ -25,11 +25,12 @@ export function Footer() {
             <h1 className="text-sm">Ялагчид</h1>
           </button>
         </Link>
-
-        <button className="flex flex-col items-center text-[#b19155] hover:text-[#ffd97a] hover:font-bold active:scale-95 transition duration-200 mt-1">
-          <FaBookMedical className="w-7 h-7" />
-          <h1 className="text-sm"> Заавар</h1>
-        </button>
+        <Link href={"/direction"} className="flex items-center">
+          <button className="flex flex-col items-center text-[#b19155] hover:text-[#ffd97a] hover:font-bold active:scale-95 transition duration-200 mt-1">
+            <FaBookMedical className="w-7 h-7" />
+            <h1 className="text-sm"> Заавар</h1>
+          </button>
+        </Link>
       </div>
     </div>
   );

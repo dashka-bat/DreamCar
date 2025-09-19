@@ -11,7 +11,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // VisuallyHid
 
 export function Header() {
   return (
-    <div className="bg-black w-full h-20 z-10 border-b-[0.5px] border-gray-600 flex px-4 justify-between">
+    <div className="bg-black w-full h-20 z-10 border-b-[0.5px] border-[#b19155] flex px-4 justify-between">
       <Link href="/" className="flex items-center">
         <div className="flex items-center">
           <Image src="/logo.png" alt="logo" width={60} height={60} />
@@ -66,13 +66,14 @@ export function Header() {
                 </h1>
               </div>
             </Link>
-
-            <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
-              <FaBookMedical className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
-              <h1 className="text-md font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
-                Сугалаа авах заавар
-              </h1>
-            </div>
+            <Link href={"/direction"} className="group">
+              <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+                <FaBookMedical className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+                <h1 className="text-md font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                  Сугалаа авах заавар
+                </h1>
+              </div>
+            </Link>
           </div>
         </SheetContent>
       </Sheet>

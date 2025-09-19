@@ -33,8 +33,8 @@ export function Section4() {
 
   return (
     <>
-      <h1 className="text-[#b19155] text-center">Сүүлийн ялагчид</h1>
-      <Table className="bg-black border-2 border-[#b19155] mt-4 ">
+      <h1 className="text-[#b19155] text-center text-2xl">Сүүлийн ялагчид</h1>
+      <Table className="bg-black border-2 border-[#b19155] mt-4 mb-5 ">
         <TableHeader>
           <TableRow className="border-[#b19155]">
             <TableHead className="w-[100px] text-[#b19155] border-[#b19155]">
