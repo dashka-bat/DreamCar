@@ -9,7 +9,7 @@ interface Winner {
   description: string;
   img?: string[];
   URL?: string;
-  endedAt?: date; // 👈 шинэ талбар
+  endedAt?: string; // 👈 шинэ талбар
 }
 
 export default function WinnerPlus() {
