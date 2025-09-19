@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Winner {
   name: string;
@@ -67,6 +68,7 @@ export default function WinnerPlus() {
       setUploading(false);
     }
   };
+  const router=useRouter()
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -97,6 +99,9 @@ export default function WinnerPlus() {
         setError(responseData.message || "Failed to add winner");
       } else {
         setSuccess("Winner added successfully!");
+             if (window.confirm("Lottery шинэчлэгдлээ ✅")) {
+      router.push("/admin");
+    }
         setWinner({
           name: "",
           phoneNumber:"",
@@ -213,8 +218,6 @@ export default function WinnerPlus() {
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
       </div>
-
-      {/* Date input */}
       <div className="mb-4">
         <label className="block text-gray-700 mb-2">Огноо</label>
         <input

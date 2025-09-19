@@ -63,7 +63,7 @@ export default function Winner() {
                             <button
                                 key={idx}
                                 onClick={() => setSelectedImage(img)}
-                                className={`border rounded-md overflow-hidden ${selectedImage === img ? "ring-2 ring-blue-500" : ""
+                                className={`border rounded-md overflow-hidden ${selectedImage === img ? "ring-2 ring-[#b19155]" : ""
                                     }`}
                             >
                                 <img
