@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     await connectToDatabase();
 
-    const { lotteryId, winner } = await request.json();
+    const { lotteryId, winner  } = await request.json();
 
     if (!lotteryId || !winner) {
       return NextResponse.json(
@@ -16,9 +16,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, ticketNumber, description, img, URL } = winner;
+    const { name, ticketNumber, description, img, URL,endedAt } = winner;
 
-    if (!name || !ticketNumber || !description) {
+    if (!name || !ticketNumber || !description || !endedAt) {
       return NextResponse.json(
         { message: "Winner must have name, ticketNumber, and description" },
         { status: 400 }
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-    const newWinner = { name, ticketNumber, description, img, URL };
+    const newWinner = { name, ticketNumber, description, img, URL,endedAt };
     lottery.winners = [...(lottery.winners || []), newWinner];
     const ticketNum = Number(ticketNumber);
     if (!isNaN(ticketNum) && (!lottery.soldNumber || ticketNum > lottery.soldNumber)) {
@@ -43,9 +43,22 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ winner: newWinner, lotteryId }, { status: 200 });
   } catch (error: any) {
-    console.error("Add winner error:", error);
+    console.log("Add winner error:", error);
     return NextResponse.json(
       { message: "Server error", error: error.message },
+      { status: 500 }
+    );
+  }
+}
+export async function GET() {
+try {
+    await connectToDatabase();
+
+    const winners = await Lottery.find({},"winners");
+    return NextResponse.json(winners, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: 'Failed to fetch winners', error: error.message },
       { status: 500 }
     );
   }

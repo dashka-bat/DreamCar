@@ -8,13 +8,15 @@ import { Footer } from "./components/footer";
 
 export default function Home() {
   return (
-    <div className="w-full flex  flex-col px-4 bg-black">
-      <Header />
-      <Section1 />
-      <Section2 />
-      {/* <Section3 /> */}
-      <Section4 />
-      <Footer />
+    <div className="w-full min-h-screen flex justify-center bg-black">
+      <div className="w-[375px] bg-black min-h-screen flex flex-col">
+        <Header />
+        <Section1 />
+        <Section2 />
+        {/* <Section3 /> */}
+        <Section4 />
+        <Footer />
+      </div>
     </div>
   );
 }

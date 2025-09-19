@@ -22,6 +22,7 @@ export interface ILottery extends Document {
     description: string;
     img?: string[];
     URL?: string;
+    endedAt?: Date;
   }[];
 }
 
@@ -47,6 +48,8 @@ const LotterySchema: Schema<ILottery> = new Schema({
       description: { type: String, required: true },
        img: [{ type: String }],
       URL: { type: String },
+      endedAt: { type: Date, required: true },
+
     },
   ],
 });

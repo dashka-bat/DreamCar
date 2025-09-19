@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -8,45 +9,37 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useEffect, useState } from "react";
 type Invoice = {
   Дугаар: React.ReactNode;
   paymentStatus: string;
   totalAmount: string;
   paymentMethod: string;
 };
-const number = [19483294];
-const invoices = [
-  {
-    Дугаар: <h1>{number}</h1>,
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    Дугаар: <h1>{number}</h1>,
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    Дугаар: <h1>{number}</h1>,
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    Дугаар: <h1>{number}</h1>,
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-];
+
+type Winner = {
+  id: string;
+  name: string;
+  ticketNumber: string;
+  description: string;
+  totalAmount: string;
+};
 
 export function Section4() {
+  const [winners, setWinners] = useState<Winner[]>([]);
+  useEffect(() => {
+    fetch("/api/winner")
+      .then((res) => res.json())
+      .then((data) => {
+        const mergedWinners = data.flatMap((item: any) => item.winners || []);
+        setWinners(mergedWinners);
+      });
+  }, []);
+  console.log("++++++++++++++++++++", winners);
   return (
     <>
       <h1 className="text-[#b19155] text-center">Suulin yalagchud</h1>
-      <Table className="bg-black border-3 border-[#b19155] mt-4">
+      <Table className="bg-black border-3 border-[#b19155] mt-4 ">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px] text-[#b19155]">Нэр</TableHead>
@@ -58,16 +51,16 @@ export function Section4() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((Дугаар: Invoice) => (
-            <TableRow key={Дугаар.totalAmount || null}>
+          {winners.map((Дугаар: Invoice) => (
+            <TableRow key={Дугаар.id}>
               <TableCell className="font-medium text-[#b19155]">
-                {Дугаар.Дугаар}
+                {Дугаар.name}
               </TableCell>
               <TableCell className="text-[#b19155]">
-                {Дугаар.paymentStatus}
+                {Дугаар.ticketNumber}
               </TableCell>
               <TableCell className="text-[#b19155]">
-                {Дугаар.paymentMethod}
+                {Дугаар.description}
               </TableCell>
               <TableCell className="text-right  text-[#b19155]">
                 {Дугаар.totalAmount}
