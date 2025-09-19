@@ -12,12 +12,12 @@ import {
 import { useEffect, useState } from "react";
 
 type Winner = {
-  id: string;
+  _id: string;
   name: string;
   ticketNumber: string;
   description: string;
   totalAmount: string;
-  endedAt: string; // endedAt нэмсэн
+  endedAt: string; 
 };
 
 export function Section4() {
@@ -61,7 +61,7 @@ export function Section4() {
             });
 
             return (
-              <TableRow key={winner.id} className="border-[#b19155] ">
+              <TableRow key={winner._id} className="border-[#b19155] ">
                 <TableCell className="font-medium text-[#b19155] border-[#b19155]">
                   {winner.name}
                 </TableCell>

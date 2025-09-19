@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CiSearch } from "react-icons/ci";
 
 type Lottery = {
   id: number;
@@ -41,14 +42,16 @@ export function Section2() {
     [id: number]: { phone: string; quantity: number; totalAmount: number };
   }>({});
   const [openDialog, setOpenDialog] = useState<null | number>(null);
+  const [openDialog2, setOpenDialog2] = useState<null | number>(null);
   const [showConfirmation, setShowConfirmation] = useState<null | number>(null);
+  const [participants, setParticipants] = useState<any[]>([]);
 
   useEffect(() => {
     fetch("/api/lottery")
       .then((res) => res.json())
       .then((data) => setData(data));
   }, []);
-
+  // handleInputChange
   const handleInputChange = (
     id: number,
     field: "phone" | "quantity",
@@ -56,22 +59,80 @@ export function Section2() {
     price?: number
   ) => {
     setFormState((prev) => {
-      const newQuantity =
-        field === "quantity" ? Number(value) : prev[id]?.quantity || 1;
-      const totalAmount = price
-        ? newQuantity * price
-        : prev[id]?.totalAmount || 0;
+      let newQuantity = prev[id]?.quantity ?? 0;
+
+      if (field === "quantity") {
+        // Хоосон үед quantity = 0
+        newQuantity =
+          value === "" || isNaN(Number(value)) || Number(value) <= 0
+            ? 0
+            : Number(value);
+      }
+
+      const totalAmount =
+        price && newQuantity > 0 ? newQuantity * price : 0;
 
       return {
         ...prev,
         [id]: {
           ...prev[id],
-          [field]: value,
+          [field]: field === "quantity" ? newQuantity : value,
+          quantity: newQuantity, // үргэлж тоо хадгална
           totalAmount,
         },
       };
     });
   };
+
+  const handleSubmit = async (id: number) => {
+    try {
+      const item = {
+        ...formState[id],
+        categoryId: String(id),
+        phoneNumber: String(formState[id]?.phone || ""),
+        quantity: String(formState[id]?.quantity || 0),
+      };
+
+      const res = await fetch("/api/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item)
+      });
+      if (res.ok) {
+        setFormState((prev) => ({
+          ...prev,
+          [id]: { phone: "", quantity: 0, totalAmount: 0 },
+        }));
+        setShowConfirmation(null);
+      }
+    } catch (error) {
+      console.log("Error submitting request:", error);
+    }
+  };
+  const handleSearch = async (id: number) => {
+    try {
+      fetch("/api/participants/" + id, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => {
+        if (res.ok) {
+          console.log("Success fetching participants");
+
+        }
+        return res.json();
+      }).then((data) => {
+        setParticipants(data.participants || []);
+      });
+    } catch (error) {
+      console.log("Error fetching participants:", error);
+    }
+  };
+  console.log("Participants:", participants);
+
+
+
+
+
 
   return (
     <div className="w-full flex justify-center items-center flex-col mt-15">
@@ -81,9 +142,9 @@ export function Section2() {
 
       {data.map((item) => {
         const phone = formState[item.id]?.phone || "";
-        const quantity = formState[item.id]?.quantity || 1;
-        const totalAmount = formState[item.id]?.totalAmount || item.price;
-        const isPhoneValid = /^\d{8}$/.test(phone);
+        const quantity = formState[item.id]?.quantity || 0;
+        const totalAmount = formState[item.id]?.totalAmount || 0;
+        const isPhoneValid = /^\d{8}$/.test(phone)
 
         return (
           <div
@@ -146,7 +207,7 @@ export function Section2() {
               </h3>
             </div>
 
-            {/* Анхны dialog: мэдээлэл авах */}
+
             <Dialog
               open={openDialog === item.id}
               onOpenChange={(val) => setOpenDialog(val ? item.id : null)}
@@ -190,17 +251,18 @@ export function Section2() {
                     <Input
                       id={`quantity-${item.id}`}
                       type="number"
-                      min={1}
-                      value={quantity}
+                      value={quantity === 0 ? "" : quantity} // харуулахдаа хоосон болгож байна
                       onChange={(e) =>
                         handleInputChange(
                           item.id,
                           "quantity",
-                          Number(e.target.value),
+                          e.target.value,
                           item.price
                         )
                       }
                     />
+
+
                   </div>
 
                   <div className="text-[#b19155] font-bold mt-2">
@@ -214,10 +276,11 @@ export function Section2() {
                   </DialogClose>
                   <Button
                     type="button"
-                    disabled={!isPhoneValid}
+                    disabled={!isPhoneValid || quantity <= 0}
                     onClick={() => {
-                      setOpenDialog(null); // Анхны dialog-г хаах
-                      setShowConfirmation(item.id); // Баталгаажсан dialog-г гаргах
+                      setOpenDialog(null);
+                      setShowConfirmation(item.id);
+
                     }}
                   >
                     Худалдаж авах
@@ -226,7 +289,7 @@ export function Section2() {
               </DialogContent>
             </Dialog>
 
-            {/* Хоёр дахь dialog: баталгаажсан мэдээлэл */}
+
             {showConfirmation === item.id && (
               <Dialog
                 open={true}
@@ -257,12 +320,129 @@ export function Section2() {
 
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button variant="outline">Хаах</Button>
+                      <Button onClick={() => handleSubmit(item.id)} variant="outline">Хаах</Button>
                     </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
+
             )}
+            <Dialog
+              open={openDialog2 === item.id}
+              onOpenChange={(val) => setOpenDialog2(val ? item.id : null)}
+            >
+              <DialogTrigger asChild>
+                <button className="w-full gap-3  self-center mt-2 px-4 py-6 h-10 bg-black text-[#b19155] flex justify-center items-center font-bold text-lg rounded-lg border-2 border-[#b19155]">
+                  <CiSearch className="w-6 h-6" />
+                  Сугалаа шалгах
+                </button>
+              </DialogTrigger>
+
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Сугалаа шалгах</DialogTitle>
+
+
+                </DialogHeader>
+
+                <div className="grid gap-4">
+                  <div className="grid gap-3">
+                    <Label htmlFor={`phone-${item.id}`}>Утасны дугаар</Label>
+                    <Input
+                      id={`phone-${item.id}`}
+                      value={phone}
+                      onChange={(e) =>
+                        handleInputChange(item.id, "phone", e.target.value)
+                      }
+                      placeholder="99112233"
+                    />
+                    {!isPhoneValid && phone.length > 0 && (
+                      <p className="text-red-500 text-sm">
+                        Утасны дугаар 8 оронтой байх ёстой!
+                      </p>
+                    )}
+                  </div>
+
+
+
+                </div>
+
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Болих</Button>
+                  </DialogClose>
+                  <Button
+                    type="button"
+                    disabled={!isPhoneValid}
+                    onClick={() => {
+                      setOpenDialog(null);
+                      setShowConfirmation(item.id);
+                      handleSearch(item.id);
+
+                    }}
+                  >
+                    Шалгах
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+
+            {showConfirmation === item.id && (
+              <Dialog
+                open={true}
+                onOpenChange={() => setShowConfirmation(null)}
+              >
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle className="text-center">
+
+                    </DialogTitle>
+                    <DialogDescription className="text-center">
+
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  {participants.length > 0 ? (
+                    <div className="mt-4 text-[#b19155] text-center">
+                      <p>Таны тасалбарын мэдээлэл:</p>
+                      <div>
+                        <div className="grid grid-cols-3 bg-gray-100 font-semibold  p-2 border-b border-gray-300">
+                          <div>Утасны дугаар</div>
+                          <div>Тасалбарын дугаар</div>
+                          <div>Хугацаа</div>
+                        </div>
+                      </div>
+                      {participants
+                        .filter((r: any) => r.phoneNumber === phone)
+                        .map((r: any) => (
+                          <div
+                            key={String(r._id)}
+                            className="grid grid-cols-3 p-2 border-b border-gray-300 hover:bg-gray-50"
+                          >
+                            <div>{r.phoneNumber}</div>
+                            <div>{r.ticketNumber}</div>
+                            <div>{r.soldAt ? new Date(r.soldAt).toLocaleString() : "N/A"}</div>
+                          </div>
+                        ))}
+
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 p-3">
+                      Таны тасалбарын мэдээлэл олдсонгүй
+                    </p>
+                  )}
+
+
+
+
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button onClick={() => handleSubmit(item.id)} variant="outline">Хаах</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>)}
           </div>
         );
       })}
