@@ -305,7 +305,7 @@ export default function AdminPage() {
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className="mt-1 h-10   border-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
+                className="mt-1 h-[500px]  border-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
               />
             </div>
 

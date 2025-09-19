@@ -95,7 +95,7 @@ export default function AllActiveLottery() {
                                                 Засварлах
                                             </a>
                                         </div>
-                                        <div className="absolute top-[570px] left-[550px]">
+                                        <div className="absolute top-[530px] left-[550px]">
                                            <a href={`/admin/participants/${lottery.id}`}><CiCircleChevRight className="w-10 h-10 hover:text-blue-400" /></a>
                                             </div>
 

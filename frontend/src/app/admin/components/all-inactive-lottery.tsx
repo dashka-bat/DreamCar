@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AddParticipant from "./add-participant";
 import { FaRegEdit } from "react-icons/fa";
 import { CiCircleChevRight, CiCirclePlus } from "react-icons/ci";
+import Link from "next/link";
 
 export default function AllInactiveLottery() {
     const [lotteries, setLotteries] = useState<any[]>([]);
@@ -21,6 +22,30 @@ export default function AllInactiveLottery() {
         lottery.id.toLowerCase().includes(search.toLowerCase()) ||
         lottery.name.toLowerCase().includes(search.toLowerCase())
     );
+    const handleDelete = async ({ id }: { id: string }) => {
+  
+
+  try {
+    const res = await fetch(`/api/getOneLottery/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+     
+      console.error("Failed to delete lottery:");
+      return;
+    }
+
+    const data = await res.json();
+       setLotteries(prev => prev.filter(lottery => lottery.id !== id));
+
+    alert("Lottery устгагдлаа ✅");
+   
+
+  } catch (error) {
+    console.error("Error deleting lottery:", error);
+  }
+};
 
     return (
         <div>
@@ -43,7 +68,7 @@ export default function AllInactiveLottery() {
                             <div key={lottery.id} className="lg:w-[600px] relative">
                                 <div className="bg-white border border-gray-500 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                                     {lottery.img && lottery.img.length > 0 && (
-                                             <div className="w-full h-[400px] flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
+                                        <div className="w-full h-[400px] flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
                                             <img
                                                 src={lottery.img[0]}
                                                 alt={lottery.name}
@@ -88,19 +113,31 @@ export default function AllInactiveLottery() {
                                                 {lottery.description || "No description provided."}
                                             </p>
                                         </div>
-                                        
-                                      
+
+
 
                                     </div>
-                                 <a href={`/admin/winner/${lottery.id}`}>
-                                       <button className="ml-3 mb-3 flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors">
-                                        <CiCirclePlus className="text-[30px]" />
-                                        Ялагч нэмэх
+                                   
+                                        <div className="flex justify-between">
+                                            <button className="ml-3 mb-3  flex items-center gap-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors">
+                                            <Link className="gap-2 flex justify-center items-center" href={`/admin/winner/${lottery.id}`}>
+                                             <CiCirclePlus className="text-[30px]" />
+                                            Ялагч нэмэх
+                                            </Link>
                                         </button>
-                                 </a>
-                                  <div className="absolute top-[570px] left-[550px]">
-                                                                            <a href={`/admin/participants/${lottery.id}`}><CiCircleChevRight className="w-10 h-10 hover:text-blue-400" /></a>
-                                                                             </div>
+                                    
+                                    <button
+                                      onClick={()=>handleDelete({id:lottery.id})}
+
+                                        className={`ml-3 mb-3  flex items-center gap-1  mr-3 cursor-pointer text-white px-4 py-2 rounded transition-colors bg-red-600 hover:bg-red-700`}
+                                    >
+                                        Устгах
+                                    </button>
+                                            </div>
+
+                                    <div className="absolute top-[530px] left-[550px]">
+                                        <a href={`/admin/participants/${lottery.id}`}><CiCircleChevRight className="w-10 h-10 hover:text-blue-400" /></a>
+                                    </div>
                                 </div>
                             </div>
                         ))}

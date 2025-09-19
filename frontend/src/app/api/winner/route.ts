@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, ticketNumber, description, img, URL,endedAt } = winner;
+    const { name, phoneNumber, ticketNumber, description, img, URL,endedAt } = winner;
 
     if (!name || !ticketNumber || !description || !endedAt) {
       return NextResponse.json(
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-    const newWinner = { name, ticketNumber, description, img, URL,endedAt };
+    const newWinner = { name,phoneNumber, ticketNumber, description, img, URL,endedAt };
     lottery.winners = [...(lottery.winners || []), newWinner];
     const ticketNum = Number(ticketNumber);
     if (!isNaN(ticketNum) && (!lottery.soldNumber || ticketNum > lottery.soldNumber)) {

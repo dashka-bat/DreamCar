@@ -19,6 +19,7 @@ export interface ILottery extends Document {
   }[];
   winners?: {
     name: string;
+    phoneNumber?:number
     ticketNumber: string;
     description: string;
     img?: string[];
@@ -46,6 +47,7 @@ const LotterySchema: Schema<ILottery> = new Schema({
   winners: [
     {
       name: { type: String, required: true },
+      phoneNumber :{type:Number ,required :false},
       ticketNumber: { type: String, required: true },
       description: { type: String, required: true },
        img: [{ type: String }],

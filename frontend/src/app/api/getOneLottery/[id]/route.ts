@@ -79,3 +79,34 @@ request: Request, context: { params: any }
   }
 }
 
+
+
+export  async function DELETE(
+  request: Request,
+  context: { params: any }
+) {
+  try {
+    await connectToDatabase();
+
+    const { id } = context.params;
+    if (!id) {
+      return NextResponse.json({ message: "Lottery id is required" }, { status: 400 });
+    }
+
+    const deletedLottery = await Lottery.findOneAndDelete({ id }).lean();
+
+    if (!deletedLottery) {
+      return NextResponse.json({ message: "Lottery not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { message: "Lottery deleted successfully", lottery: deletedLottery },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("DELETE /api/lottery/[id] error:", error);
+    return NextResponse.json({ message: "Server error", error: error.message }, { status: 500 });
+  }
+}
+
+

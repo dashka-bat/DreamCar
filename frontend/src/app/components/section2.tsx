@@ -130,7 +130,7 @@ export function Section2() {
   console.log("Participants:", participants);
 
 
-
+  console.log(data)
 
 
 
@@ -140,7 +140,7 @@ export function Section2() {
         Одоогийн Сугалаа
       </h1>
 
-      {data.map((item) => {
+      {data.filter((r: any) => r.active === true).map((item) => {
         const phone = formState[item.id]?.phone || "";
         const quantity = formState[item.id]?.quantity || 0;
         const totalAmount = formState[item.id]?.totalAmount || 0;
@@ -152,10 +152,13 @@ export function Section2() {
             className="bg-black rounded-lg w-[354px] h-fit mt-5 border-[0.5px] border-[#2E3A4B] p-4"
           >
             <div className="flex justify-between">
-              <h3 className="text-[#4ADE80]">
+              <h3 className={`${item.active ? "text-[#4ADE80]" : "text-red-600"}`}>
                 {item.active ? "Идэвхтэй" : "Идэвхгүй"}
               </h3>
-              <h4 className="text-[#b19155]">{item.endedAt}</h4>
+              <h4 className="text-[#b19155]">
+                {new Date(item.endedAt).toISOString().split("T")[0]}
+              </h4>
+
             </div>
 
             <h2 className="text-xl font-bold mt-4 text-[#b19155]">
@@ -251,7 +254,7 @@ export function Section2() {
                     <Input
                       id={`quantity-${item.id}`}
                       type="number"
-                      value={quantity === 0 ? "" : quantity} // харуулахдаа хоосон болгож байна
+                      value={quantity === 0 ? "" : quantity}
                       onChange={(e) =>
                         handleInputChange(
                           item.id,
@@ -443,6 +446,81 @@ export function Section2() {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>)}
+          </div>
+        );
+      })}
+      {data.filter((r: any) => r.active === false).map((item) => {
+        const phone = formState[item.id]?.phone || "";
+        const quantity = formState[item.id]?.quantity || 0;
+        const totalAmount = formState[item.id]?.totalAmount || 0;
+        const isPhoneValid = /^\d{8}$/.test(phone)
+
+        return (
+          <div
+            key={item.id}
+            className="bg-black rounded-lg w-[354px] h-fit mt-5 border-[0.5px] border-[#2E3A4B] p-4"
+          >
+            <div className="flex justify-between">
+              <h3 className={`${item.active ? "text-[#4ADE80]" : "text-red-600"}`}>
+                {item.active ? "Идэвхтэй" : "Идэвхгүй"}
+              </h3>
+              <h4 className="text-[#b19155]">{new Date(item.endedAt).toISOString().split("T")[0]}</h4>
+            </div>
+
+            <h2 className="text-xl font-bold mt-4 text-[#b19155]">
+              {item.name}
+            </h2>
+            <h3 className="text-[#b19155]">{item.description}</h3>
+
+            {item.img.length > 0 && (
+              <div className="relative mt-4 w-full h-[200px] rounded-lg overflow-hidden">
+                <Carousel className="w-full h-full">
+                  <CarouselContent>
+                    {item.img.map((url, index) => (
+                      <CarouselItem key={index}>
+                        <Image
+                          alt={`${item.name}-${index}`}
+                          width={360}
+                          height={200}
+                          src={url}
+                          className="rounded-lg object-cover w-full h-full"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-[#b19155] text-black px-2 py-1 rounded" />
+                  <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#b19155] text-black px-2 py-1 rounded" />
+                </Carousel>
+              </div>
+            )}
+
+            <div className="flex justify-between mt-5 px-4">
+              <div className="flex flex-col justify-center items-center">
+                <h2 className="text-3xl font-bold text-[#b19155]">
+                  {item.price}₮
+                </h2>
+                <h3 className="text-[#b19155]">Тасалбарын үнэ</h3>
+              </div>
+              <div className="flex flex-col justify-center items-center">
+                <h2 className="text-3xl font-bold text-[#b19155]">
+                  {item.soldNumber}
+                </h2>
+                <h3 className="text-[#b19155]">Зарагдсан</h3>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-center items-center mt-5">
+              <h3 className="text-[#b19155] self-center flex">
+                {Math.floor((item.soldNumber * 100) / item.totalNumber)}% зарагдсан (
+                {item.totalNumber}-аас)
+              </h3>
+            </div>
+
+
+
+            <a href={`/winner/${item.id}`} className="w-full self-center mt-2 px-4 py-6 h-10 bg-black text-[#b19155] flex justify-center items-center font-bold text-lg rounded-lg border-2 border-[#b19155]">
+              Азтанг харах
+            </a>
           </div>
         );
       })}

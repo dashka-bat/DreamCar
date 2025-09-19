@@ -24,19 +24,19 @@ export function Header() {
 
       <Sheet>
         <SheetTrigger asChild>
-          <div>
-            <Button variant="outline" className="bg-black border-0">
+          <div className="mb-8">
+            <button className="bg-black border-0 ">
               <div className="flex flex-col justify-center cursor-pointer space-y-1 mt-10">
                 <span className="w-7 h-1 bg-[#b19155] rounded-md"></span>
                 <span className="w-7 h-1 bg-[#b19155] rounded-md"></span>
                 <span className="w-7 h-1 bg-[#b19155] rounded-md"></span>
               </div>
-            </Button>
+            </button>
           </div>
         </SheetTrigger>
 
         <SheetContent className="bg-black text-[#b19155] shadow-xl">
-          {/* Accessibility-д зориулсан DialogTitle */}
+        
           <DialogTitle>
             <VisuallyHidden>Navigation Menu</VisuallyHidden>
           </DialogTitle>

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 
 interface Winner {
   name: string;
+  phoneNumber:string
   ticketNumber: string;
   description: string;
   img?: string[];
@@ -17,6 +18,7 @@ export default function WinnerPlus() {
   const [lotteryId, setLotteryId] = useState(id || "");
   const [winner, setWinner] = useState<Winner>({
     name: "",
+    phoneNumber:"",
     ticketNumber: "",
     description: "",
     img: [],
@@ -74,6 +76,7 @@ export default function WinnerPlus() {
     try {
       const winnerData = {
         ...winner,
+        phoneNumber:Number(winner.phoneNumber),
         endedAt: winner.endedAt
           ? new Date(winner.endedAt).toISOString()
           : new Date().toISOString(),
@@ -96,6 +99,7 @@ export default function WinnerPlus() {
         setSuccess("Winner added successfully!");
         setWinner({
           name: "",
+          phoneNumber:"",
           ticketNumber: "",
           description: "",
           img: [],
@@ -199,6 +203,16 @@ export default function WinnerPlus() {
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
       </div>
+       <div className="mb-4">
+        <label className="block text-gray-700 mb-2">Утасны дугаар</label>
+        <input
+          type="number"
+          name="phoneNumber"
+          value={winner.phoneNumber}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        />
+      </div>
 
       {/* Date input */}
       <div className="mb-4">
@@ -220,7 +234,7 @@ export default function WinnerPlus() {
 
       <button
         onClick={handleSubmit}
-        disabled={loading || uploading}
+        disabled={loading || uploading || winner.phoneNumber.length!==8}
         className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition-colors"
       >
         {loading ? "Adding Winner..." : "Add Winner"}

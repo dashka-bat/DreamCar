@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Lottery {
   id: string;
@@ -21,6 +22,7 @@ export default function LotteryDetailPage() {
   const [lottery, setLottery] = useState<Lottery | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+      const router = useRouter();
   const handleUpload = async (input: HTMLInputElement) => {
     try {
       if (input.files && input.files.length > 0) {
@@ -91,7 +93,9 @@ export default function LotteryDetailPage() {
       if (!res.ok) throw new Error("Failed to update lottery");
       const updated = await res.json();
       setLottery(updated);
-      alert("Сугалаа амжилттай шинэчлэгдсэн!");
+      if (window.confirm("Lottery шинэчлэгдлээ ✅")) {
+      router.push("/admin");
+    }
     } catch (error) {
       console.error(error);
       alert("Өөрчлөлтүүдийг хадгалж чадсангүй");
@@ -99,6 +103,32 @@ export default function LotteryDetailPage() {
       setSaving(false);
     }
   };
+
+
+const handleDelete = async ({ id }: { id: string }) => {
+  
+
+  try {
+    const res = await fetch(`/api/getOneLottery/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+     
+      console.error("Failed to delete lottery:");
+      return;
+    }
+
+    const data = await res.json();
+    console.log("Lottery deleted:", data);
+    if (window.confirm("Lottery устгагдлаа ✅")) {
+      router.push("/admin");
+    }
+
+  } catch (error) {
+    console.error("Error deleting lottery:", error);
+  }
+};
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
   if (!lottery) return <p className="text-center py-10">Lottery not found</p>;
@@ -219,13 +249,22 @@ export default function LotteryDetailPage() {
           />
           <span>{lottery.active ? "Идэвхитэй" : "Идэвхигүй"}</span>
         </div>
-        <button
+        <div className="flex justify-between">
+          <button
           onClick={handleSave}
           disabled={saving}
           className={`px-4 py-2 rounded text-white ${saving ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}`}
         >
           {saving ? "Хадгалж байна..." : "Хадгалах"}
         </button>
+         <button
+          onClick={() => handleDelete({ id: lottery.id })}
+       
+          className={`px-4 py-2  rounded text-white ${saving ? "bg-gray-400" : "bg-red-600 hover:bg-red-700"}`}
+        >
+          {saving ? "Устгаж байна..." : "Устгах"}
+        </button>
+        </div>
       </div>
     </div>
   );
