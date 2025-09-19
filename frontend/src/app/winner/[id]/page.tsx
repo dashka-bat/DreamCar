@@ -80,10 +80,10 @@ export default function Winner() {
                     <h1 className="text-[#b19155] font-extrabold text-xl ml-3 pb-3 ">{winner?.winners[0]?.name}</h1>
                 </div>
                 <div className="ml-4 mt-3">
-                    <h1 className="text-[#b19155] font-extrabold text-[16px] ml-5 pb-3">Азтан болсон сугалааны дугаар: {winner.winners[0].ticketNumber}</h1>
+                    <h1 className="text-[#b19155] font-extrabold text-[16px] ml-5 pb-3">Азтан болсон сугалааны дугаар: {winner?.winners[0]?.ticketNumber}</h1>
                 </div>
                 <div className="ml-4 mt-3">
-                    <h1 className="text-[#b19155] font-extrabold text-[16px] ml-5 pb-3">Утасны дугаар: {winner.winners[0].phoneNumber}</h1>
+                    <h1 className="text-[#b19155] font-extrabold text-[16px] ml-5 pb-3">Утасны дугаар: {winner?.winners[0]?.phoneNumber}</h1>
                 </div>
                 <div className="mt-5 w-[90%]  ml-4">
                     <h1 className="text-[#b19155] font-extrabold text-xl ml-3 pb-3">Тайлбар:</h1>
@@ -103,7 +103,7 @@ export default function Winner() {
                 </div>
                 <div className="flex justify-center items-center">
                     <iframe
-                        src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FDavaagiinMunkhErdene%2Fvideos%2F3019469121570440%2F&show_text=false&width=267&t=0"
+                        src={winner?.winners[0]?.URL}
                         width="300"
                         height="500"
                         style={{ border: "none", overflow: "hidden" }}
