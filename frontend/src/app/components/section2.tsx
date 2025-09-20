@@ -416,22 +416,24 @@ export function Section2() {
                             <div>Хугацаа</div>
                           </div>
                         </div>
-                        {participants
-                          .filter((r: any) => r.phoneNumber === phone)
-                          .map((r: any) => (
-                            <div
-                              key={String(r._id)}
-                              className="grid grid-cols-3 p-2 border-b border-gray-300 hover:bg-gray-50"
-                            >
-                              <div>{r.phoneNumber}</div>
-                              <div>{r.ticketNumber}</div>
-                              <div>
-                                {r.soldAt
-                                  ? new Date(r.soldAt).toLocaleString()
-                                  : "N/A"}
+                        <div className="max-h-64 overflow-y-auto border rounded">
+                          {participants
+                            .filter((r: any) => r.phoneNumber === phone)
+                            .map((r: any) => (
+                              <div
+                                key={String(r._id)}
+                                className="grid grid-cols-3 p-2 border-b border-gray-300 hover:bg-gray-50"
+                              >
+                                <div>{r.phoneNumber}</div>
+                                <div>{r.ticketNumber}</div>
+                                <div>
+                                  {r.soldAt
+                                    ? new Date(r.soldAt).toLocaleString()
+                                    : "N/A"}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
+                        </div>
                       </div>
                     ) : (
                       <p className="text-gray-500 p-3">
