@@ -233,7 +233,7 @@ export function Section2() {
                     <DialogDescription>
                       {item.name} сугалааг авахын тулд мэдээллээ оруулна уу.
                     </DialogDescription>
-                    <div>Сугaлаа батлгаажих хүртэл хүлээнэ үү (2-6 цаг)</div>
+                    <div>Сугaлаа баталгаажих хүртэл хүлээнэ үү (2-8 цаг)</div>
                   </DialogHeader>
 
                   <div className="grid gap-4">
