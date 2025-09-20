@@ -178,13 +178,14 @@ export function Section2() {
                     <CarouselContent>
                       {item.img.map((url, index) => (
                         <CarouselItem key={index}>
-                          <Image
-                            alt={`${item.name}-${index}`}
-                            width={360}
-                            height={200}
-                            src={url}
-                            className="rounded-lg object-cover w-full h-full"
-                          />
+                          <div className="relative w-full h-[200px] rounded-lg overflow-hidden bg-black">
+                            <Image
+                              alt={`${item.name}-${index}`}
+                              src={url}
+                              fill
+                              className="object-contain rounded-lg"
+                            />
+                          </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
