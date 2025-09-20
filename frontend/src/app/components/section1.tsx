@@ -9,11 +9,11 @@ export function Section1() {
         <div>Xүлээн авах боломжтой</div>
       </h2>
 
-      <Marquee className="gap-44">
-        <Image width={300} height={100} src={"/1.png"} alt=""></Image>
+      <Marquee className="gap-100" speed={50} pauseOnHover={true}>
+        {/* <Image width={300} height={100} src={"/1.png"} alt=""></Image> */}
         <Image width={300} height={100} src={"/4.png"} alt=""></Image>
-        <Image width={300} height={100} src={"/3.png"} alt=""></Image>
-        <Image width={300} height={100} src={"/2.png"} alt=""></Image>
+        {/* <Image width={300} height={100} src={"/3.png"} alt=""></Image> */}
+        {/* <Image width={300} height={100} src={"/2.png"} alt=""></Image> */}
         <Image width={300} height={100} src={"/5.png"} alt=""></Image>
         <Image width={300} height={100} src={"/6.png"} alt=""></Image>
       </Marquee>
