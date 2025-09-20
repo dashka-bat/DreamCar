@@ -101,10 +101,6 @@ export function Section2() {
         body: JSON.stringify(item),
       });
       if (res.ok) {
-        setFormState((prev) => ({
-          ...prev,
-          [id]: { phone: "", quantity: 0, totalAmount: 0 },
-        }));
         setShowConfirmation(null);
       }
     } catch (error) {
@@ -130,10 +126,15 @@ export function Section2() {
       console.log("Error fetching participants:", error);
     }
   };
+  const handleClose = ({ id }: any) => {
+    setFormState((prev) => ({
+      ...prev,
+      [id]: { phone: "", quantity: 0, totalAmount: 0 },
+    }));
+    setShowConfirmation2(null);
+  };
   console.log("Participants:", participants);
-
-  console.log(data);
-
+  console.log("Form State:", formState);
   return (
     <div className="w-full flex justify-center items-center flex-col mt-15">
       <h1 className="self-start text-2xl ml-[75px] font-bold text-[#b19155]">
@@ -297,7 +298,7 @@ export function Section2() {
               {showConfirmation2 === item.id && (
                 <Dialog
                   open={true}
-                  onOpenChange={() => setShowConfirmation(null)}
+                  onOpenChange={() => setShowConfirmation2(null)} // Dialog зөв хаагдана
                 >
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -313,18 +314,28 @@ export function Section2() {
 
                     <div className="mt-4 text-[#b19155] text-center">
                       <p>Үнийн дүн: {totalAmount} ₮</p>
-                      <p>Гүйлгээний утга: {phone}</p>
+                      <p>
+                        Гүйлгээний утга:{" "}
+                        {formState[item.id]?.phone
+                          ? formState[item.id].phone
+                          : "—"}
+                      </p>
                       <p>
                         Шилжүүлэх данс: <br />
-                        Данс: 5400982870 Хаан банк <br />
-                        IBAN: MN770005005400982870 <br />
-                        Нэр: Хулан
+                        Данс: 5876401001 Хаан банк <br />
+                        IBAN: MN940005005876401001 <br />
+                        Нэр:Ганбаяр
                       </p>
                     </div>
 
                     <DialogFooter>
                       <DialogClose asChild>
-                        <Button variant="outline">Хаах</Button>
+                        <Button
+                          onClick={() => handleClose({ id: item.id })}
+                          variant="outline"
+                        >
+                          Хаах
+                        </Button>
                       </DialogClose>
                     </DialogFooter>
                   </DialogContent>
