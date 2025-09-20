@@ -22,7 +22,7 @@ type Winner = {
   ticketNumber: string;
   description: string;
   totalAmount: string;
-  endedAt: string; 
+  endedAt: string;
 };
 export function Body() {
   const [winners, setWinners] = useState<Winner[]>([]);
