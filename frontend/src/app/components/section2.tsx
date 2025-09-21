@@ -191,7 +191,7 @@ export function Section2() {
             <div className="flex justify-between mt-5 px-4">
               <div className="flex flex-col justify-center items-center">
                 <h2 className="text-3xl font-bold text-[#b19155]">
-                  {item.price}₮
+              {(Number(item.price) || 0).toLocaleString("mn-MN")}₮
                 </h2>
                 <h3 className="text-[#b19155]">Тасалбарын үнэ</h3>
               </div>
@@ -205,8 +205,8 @@ export function Section2() {
 
             <div className="flex flex-col justify-center items-center mt-5">
               <h3 className="text-[#b19155] self-center flex">
-                {(item.soldNumber * 100) / item.totalNumber}% зарагдсан (
-                {item.totalNumber}-аас)
+              {Math.round((Number(item.soldNumber) / Number(item.totalNumber)) * 100)}% зарагдсан (
+  {item.totalNumber}-аас)
               </h3>
             </div>
 
@@ -416,18 +416,21 @@ export function Section2() {
                           <div>Хугацаа</div>
                         </div>
                       </div>
+                       <div className="max-h-64 overflow-y-auto">
                       {participants
                         .filter((r: any) => r.phoneNumber === phone)
                         .map((r: any) => (
                           <div
-                            key={String(r._id)}
-                            className="grid grid-cols-3 p-2 border-b border-gray-300 hover:bg-gray-50"
-                          >
-                            <div>{r.phoneNumber}</div>
-                            <div>{r.ticketNumber}</div>
-                            <div>{r.soldAt ? new Date(r.soldAt).toLocaleString() : "N/A"}</div>
-                          </div>
-                        ))}
+            key={String(r._id)}
+            className="grid grid-cols-3 p-2 border-b border-gray-300 hover:bg-gray-50"
+          >
+            <div>{r.phoneNumber}</div>
+            <div>{r.ticketNumber}</div>
+            <div>
+              {r.soldAt ? new Date(r.soldAt).toLocaleString() : "N/A"}
+            </div>
+          </div>
+                        ))}</div>
 
                     </div>
                   ) : (
@@ -510,10 +513,11 @@ export function Section2() {
             </div>
 
             <div className="flex flex-col justify-center items-center mt-5">
-              <h3 className="text-[#b19155] self-center flex">
-                {Math.floor((item.soldNumber * 100) / item.totalNumber)}% зарагдсан (
-                {item.totalNumber}-аас)
-              </h3>
+           <h3 className="text-[#b19155] self-center flex">
+ {Math.round((Number(item.soldNumber) / Number(item.totalNumber)) * 100)}% зарагдсан (
+  {item.totalNumber}-аас)
+</h3>
+
             </div>
 
 
