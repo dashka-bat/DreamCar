@@ -3,18 +3,17 @@
 import { useState, useEffect } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { PiRadioactive } from "react-icons/pi";
-import { TbRadioactiveFilled } from "react-icons/tb"
-import { IoIosGitPullRequest } from "react-icons/io";;
+import { TbRadioactiveFilled } from "react-icons/tb";
+import { IoIosGitPullRequest } from "react-icons/io";
 import AllActiveLottery from "./components/all-active-lottery";
 import AllInactiveLottery from "./components/all-inactive-lottery";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 import { IoCloudUploadOutline } from "react-icons/io5";
-
 import Requests from "./components/requests";
 const correctPin = String(process.env.NEXT_PUBLIC_ADMIN_PIN);
-const PIN_TIMEOUT = 10 * 60 * 1000;
+const PIN_TIMEOUT = 10 * 60 * 10000;
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("add");
@@ -56,12 +55,12 @@ export default function AdminPage() {
     } else {
       alert("PIN буруу байна");
     }
-  }
+  };
   useEffect(() => {
     if (!isAuthorized) return;
 
     const interval = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         if (prev <= 1) {
           setIsAuthorized(false);
           localStorage.removeItem("pinVerifiedAt");
@@ -76,7 +75,9 @@ export default function AdminPage() {
   }, [isAuthorized]);
 
   const formatTime = (seconds: number) => {
-    const min = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const min = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
     const sec = (seconds % 60).toString().padStart(2, "0");
     return `${min}:${sec}`;
   };
@@ -104,16 +105,15 @@ export default function AdminPage() {
     );
   }
 
-
-
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const target = e.target;
     if (target instanceof HTMLInputElement && target.type === "file") {
       handleUpload(target);
       return;
     }
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [target.name]: target.value,
     }));
@@ -135,7 +135,7 @@ export default function AdminPage() {
         if (!response.ok) throw new Error("Image upload failed");
 
         const dataJson = await response.json();
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           img: [...prev.img, dataJson.secure_url],
         }));
@@ -172,7 +172,6 @@ export default function AdminPage() {
       }
 
       const result = await response.json();
-      console.log("Lottery created:", result);
       alert("Сугалаа амжилттай хадгалагдлаа!");
       setFormData({
         name: "",
@@ -192,41 +191,43 @@ export default function AdminPage() {
     }
   };
 
-
-
   return (
     <div className="flex relative">
-
       <div className="fixed top-0 left-0 w-[100%] max-w-xs bg-white p-8 h-screen shadow z-40 pt-[120px]">
         <div className="flex flex-col justify-between h-full">
           <nav className="flex flex-col gap-6 text-sm text-gray-700">
             <button
               onClick={() => setActiveTab("add")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "add" ? "bg-gray-300" : "hover:bg-gray-200"
-                }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
+                activeTab === "add" ? "bg-gray-300" : "hover:bg-gray-200"
+              }`}
             >
               <CiCirclePlus className="w-7 h-7" /> Сугалаа оруулах
             </button>
 
             <button
               onClick={() => setActiveTab("active")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "active" ? "bg-gray-300" : "hover:bg-gray-200"
-                }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
+                activeTab === "active" ? "bg-gray-300" : "hover:bg-gray-200"
+              }`}
             >
-              <PiRadioactive className="w-7 h-7 text-gray-400" /> Идэвхитэй сугалаа
+              <PiRadioactive className="w-7 h-7 text-gray-400" /> Идэвхитэй
+              сугалаа
             </button>
 
             <button
               onClick={() => setActiveTab("inactive")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "inactive" ? "bg-gray-300" : "hover:bg-gray-200"
-                }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
+                activeTab === "inactive" ? "bg-gray-300" : "hover:bg-gray-200"
+              }`}
             >
               <TbRadioactiveFilled className="w-7 h-7" /> Идэвхигүй сугалаа
             </button>
             <button
               onClick={() => setActiveTab("requests")}
-              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${activeTab === "requests" ? "bg-gray-300" : "hover:bg-gray-200"
-                }`}
+              className={`flex text-xl items-center gap-2 transition-all px-4 py-4 rounded-lg ${
+                activeTab === "requests" ? "bg-gray-300" : "hover:bg-gray-200"
+              }`}
             >
               <IoIosGitPullRequest className="w-7 h-7" /> Хүсэлтүүд
             </button>
@@ -247,7 +248,9 @@ export default function AdminPage() {
 
             <div className="grid grid-cols-2 gap-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Нэр</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Нэр
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -257,7 +260,9 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Эхлэх огноо</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Эхлэх огноо
+                </label>
                 <input
                   type="date"
                   name="createdAt"
@@ -267,7 +272,9 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Дуусах огноо</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Дуусах огноо
+                </label>
                 <input
                   type="date"
                   name="endedAt"
@@ -277,7 +284,9 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Үнэ</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Үнэ
+                </label>
                 <input
                   type="number"
                   name="price"
@@ -287,7 +296,9 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Нийт тоо</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Нийт тоо
+                </label>
                 <input
                   type="number"
                   name="totalNumber"
@@ -299,7 +310,9 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Тайлбар</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Тайлбар
+              </label>
               <textarea
                 name="description"
                 value={formData.description}
@@ -309,46 +322,41 @@ export default function AdminPage() {
               />
             </div>
 
-            <div >
-  <div className=" grid grid-cols-3  lg:gap-2 relative">
-    {formData.img.map((url, i) => (
-      <div key={i} className="relative xl:w-75 lg:w-50 w-80 h-50">
-        <img
-          src={url}
-          alt="Uploaded"
-          className="w-full h-full object-fill rounded"
-        />
-        <button
-          type="button"
-          onClick={() => {
-            setFormData(prev => ({
-              ...prev,
-              img: prev.img.filter((_, index) => index !== i),
-            }));
-          }}
-          className="absolute top-1 right-1 bg-red-500 cursor-pointer text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
-        >
-         <RiDeleteBinLine />
-
-        </button>
-      </div>
-    ))}
-    <label className="lg:w-50 xl:w-75 w-80 h-50 bg-gray-300 text-gray-700 cursor-pointer rounded flex items-center justify-center hover:bg-gray-400">
-      <IoCloudUploadOutline className="w-10 h-10" />
-      <input
-        type="file"
-        multiple
-        name="img"
-        onChange={handleChange}
-        className="hidden"
-      />
-    </label>
-  </div>
-</div>
-
-
-
-
+            <div>
+              <div className=" grid grid-cols-3  lg:gap-2 relative">
+                {formData.img.map((url, i) => (
+                  <div key={i} className="relative xl:w-75 lg:w-50 w-80 h-50">
+                    <img
+                      src={url}
+                      alt="Uploaded"
+                      className="w-full h-full object-fill rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          img: prev.img.filter((_, index) => index !== i),
+                        }));
+                      }}
+                      className="absolute top-1 right-1 bg-red-500 cursor-pointer text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                    >
+                      <RiDeleteBinLine />
+                    </button>
+                  </div>
+                ))}
+                <label className="lg:w-50 xl:w-75 w-80 h-50 bg-gray-300 text-gray-700 cursor-pointer rounded flex items-center justify-center hover:bg-gray-400">
+                  <IoCloudUploadOutline className="w-10 h-10" />
+                  <input
+                    type="file"
+                    multiple
+                    name="img"
+                    onChange={handleChange}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            </div>
 
             <div className="flex justify-end">
               <button
@@ -378,9 +386,6 @@ export default function AdminPage() {
           </div>
         )}
       </div>
-
-
     </div>
   );
 }
-
