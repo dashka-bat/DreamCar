@@ -1,36 +1,25 @@
 import { NextResponse } from "next/server";
 import Lottery from "@/model/lottery";
-async function deleteParticipantByTicketNumber(
-  lotteryId: string,
-  ticketNumber: string
-) {
-  try {
-    const result = await Lottery.updateOne(
-      { id: lotteryId },
-      {
-        $pull: {
-          participants: { ticketNumber },
-        },
-      }
-    );
 
-    return result;
-  } catch (error) {
-    console.error("Participant устгах үед алдаа гарлаа:", error);
-    throw error;
-  }
-}
 export async function DELETE(
   request: Request,
   context: { params: Promise<{ lotteryId: string; ticketNumber: string }> }
 ) {
   try {
-    const { lotteryId, ticketNumber } = await context.params; // ✅ params-г await хийв
-    const result = await deleteParticipantByTicketNumber(lotteryId, ticketNumber);
+    const { lotteryId, ticketNumber } = await context.params;
+    const lottery = await Lottery.findOne({ id: lotteryId });
+    if (!lottery) throw new Error("Lottery олдсонгүй");
+    lottery.participants = lottery.participants.filter(
+      (p: any) => p.ticketNumber !== ticketNumber
+    );
 
-    return NextResponse.json({ success: true, result });
-  } catch (error) {
-    return NextResponse.json({ success: false, error }, { status: 500 });
+
+    lottery.soldNumber = lottery.participants.length;
+
+    await lottery.save();
+
+    return NextResponse.json({ success: true, lottery });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
-
