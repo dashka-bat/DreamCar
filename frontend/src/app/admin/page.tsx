@@ -172,7 +172,6 @@ export default function AdminPage() {
       }
 
       const result = await response.json();
-      console.log("Lottery created:", result);
       alert("Сугалаа амжилттай хадгалагдлаа!");
       setFormData({
         name: "",

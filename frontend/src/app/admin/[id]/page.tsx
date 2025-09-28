@@ -120,7 +120,6 @@ const handleDelete = async ({ id }: { id: string }) => {
     }
 
     const data = await res.json();
-    console.log("Lottery deleted:", data);
     if (window.confirm("Lottery устгагдлаа ✅")) {
       router.push("/admin");
     }

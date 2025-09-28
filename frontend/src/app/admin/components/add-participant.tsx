@@ -9,7 +9,6 @@ export default function AddParticipant({id}: {id?: string}) {
     phone.length == 8 && quantity.length > 0 && Number(quantity) > 0;
 
   const handleAdd = () => {
-    console.log("Phone:", phone, "Quantity:", quantity);
     fetch(`/api/participants`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,7 +21,6 @@ export default function AddParticipant({id}: {id?: string}) {
       if (!res.ok) throw new Error("Failed to add participants");
       return res.json();
     }).then((data) => {
-      console.log("Participants added:", data);
       alert(`Successfully added ${data.participants.length} participants.`);
       setPhone("");
       setQuantity("");
