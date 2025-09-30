@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MdHome } from "react-icons/md";
 import { FaTicketSimple } from "react-icons/fa6";
 import { GiPodiumWinner } from "react-icons/gi";
+import { MdOutlineContactPage } from "react-icons/md";
 import { FaBookMedical } from "react-icons/fa";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DialogTitle } from "@/components/ui/dialog"; // DialogTitle импорт
@@ -74,6 +75,20 @@ export function Header() {
                 </h1>
               </div>
             </Link>
+            {/* External Facebook link */}
+            <a
+              href="https://www.facebook.com/dreamcar.mn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group"
+            >
+              <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
+                <MdOutlineContactPage className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
+                <h1 className="text-md font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
+                  Page Хуудас руу очих
+                </h1>
+              </div>
+            </a>
           </div>
         </SheetContent>
       </Sheet>
