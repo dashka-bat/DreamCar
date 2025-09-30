@@ -85,7 +85,7 @@ export function Header() {
               <div className="flex items-center gap-4 p-4 rounded-xl border-2 border-[#b19155] bg-black hover:bg-[#b19155] transition-colors duration-300 cursor-pointer shadow-lg">
                 <MdOutlineContactPage className="w-8 h-8 text-[#b19155] hover:text-black transition-colors duration-300" />
                 <h1 className="text-md font-semibold text-[#b19155] hover:text-black transition-colors duration-300">
-                  Page Хуудас руу очих
+                  Page Хуудас-руу очих
                 </h1>
               </div>
             </a>
