@@ -207,18 +207,18 @@ export function Body() {
                 </div>
               </div>
 
-              {/* Progress */}
               <div className="flex flex-col justify-center items-center mt-5">
                 <h3 className="text-[#b19155] self-center flex">
-                  {(item.soldNumber * 100) / item.totalNumber}% зарагдсан (
+                 {(item.soldNumber * 100 / item.totalNumber).toFixed(0)}% зарагдсан
+ (
                   {item.totalNumber}-аас)
                 </h3>
               </div>
 
-              {/* Идэвхтэй үед */}
+       
               {item.active ? (
                 <>
-                  {/* Худалдаж авах dialog */}
+              
                   <Dialog
                     open={openDialog === item.id}
                     onOpenChange={(val) => setOpenDialog(val ? item.id : null)}
@@ -228,11 +228,9 @@ export function Body() {
                         Сугалаа худалдаж авах
                       </button>
                     </DialogTrigger>
-                    {/* Dialog дотор Section2 шиг */}
-                    {/* ... */}
+                
                   </Dialog>
 
-                  {/* Сугалаа шалгах dialog */}
                   <Dialog
                     open={openDialog2 === item.id}
                     onOpenChange={(val) => setOpenDialog2(val ? item.id : null)}

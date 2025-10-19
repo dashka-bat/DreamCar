@@ -82,28 +82,28 @@ export default function AdminPage() {
     return `${min}:${sec}`;
   };
 
-  if (!isAuthorized) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <form onSubmit={handlePinSubmit} className="flex flex-col gap-4">
-          <input
-            type="password"
-            placeholder="4 оронтой PIN"
-            value={pin}
-            onChange={(e) => setPin(e.target.value)}
-            className="p-2 border rounded text-center"
-            maxLength={4}
-          />
-          <button
-            type="submit"
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-          >
-            Нэвтрэх
-          </button>
-        </form>
-      </div>
-    );
-  }
+  // if (!isAuthorized) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center h-screen">
+  //       <form onSubmit={handlePinSubmit} className="flex flex-col gap-4">
+  //         <input
+  //           type="password"
+  //           placeholder="4 оронтой PIN"
+  //           value={pin}
+  //           onChange={(e) => setPin(e.target.value)}
+  //           className="p-2 border rounded text-center"
+  //           maxLength={4}
+  //         />
+  //         <button
+  //           type="submit"
+  //           className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+  //         >
+  //           Нэвтрэх
+  //         </button>
+  //       </form>
+  //     </div>
+  //   );
+  // }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

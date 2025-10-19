@@ -6,7 +6,7 @@ export async function DELETE(
   context: { params: Promise<{ lotteryId: string; ticketNumber: string }> }
 ) {
   try {
-    const { lotteryId, ticketNumber } = await context.params;
+    const { lotteryId, ticketNumber } = await context.params;N
     const lottery = await Lottery.findOne({ id: lotteryId });
     if (!lottery) throw new Error("Lottery олдсонгүй");
     lottery.participants = lottery.participants.filter(

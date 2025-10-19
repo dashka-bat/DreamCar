@@ -1,60 +1,42 @@
 "use client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+
 type Winner = {
   _id: string;
   name: string;
   ticketNumber: string;
   description: string;
-  totalAmount: string;
   endedAt: string;
 };
+
 export function Body() {
   const [winners, setWinners] = useState<Winner[]>([]);
+
   useEffect(() => {
     fetch("/api/winner")
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         const mergedWinners = data.flatMap((item: any) => item.winners || []);
         setWinners(mergedWinners);
       });
   }, []);
+
   return (
-    <div className="w-[375px] min-h-screen flex justify-center bg-black">
-      <Table className="bg-black border-2 border-[#b19155] mt-4 ">
-        <TableHeader>
-          <TableRow className="border-[#b19155]">
-            <TableHead className="w-[100px] text-[#b19155] border-[#b19155]">
-              Нэр
-            </TableHead>
-            <TableHead className="text-[#b19155] border-[#b19155]">
-              Суглааны <h1 className="ml-2 mb-2">дугаар</h1>
-            </TableHead>
-            <TableHead className="text-[#b19155] border-[#b19155]">
-              Хонжвор
-            </TableHead>
-            <TableHead className="text-right text-[#b19155] border-[#b19155]">
-              Он сар
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {winners.map((winner: Winner) => {
+    <div className="flex justify-center w-full overflow-x-hidden">
+      <div className="w-full max-w-[375px] px-2">
+        <div className="hidden sm:flex bg-black border-b-2 border-[#b19155] mt-4 text-[#b19155] text-sm">
+          <div className="w-1/3 text-center font-semibold py-1 border-r border-[#b19155]">
+            Нэр
+          </div>
+          <div className="w-1/3 text-center font-semibold py-1 border-r border-[#b19155]">
+            Суглааны дугаар
+          </div>
+          <div className="w-1/3 text-center font-semibold py-1">
+            Он сар
+          </div>
+        </div>
+        <div className="mt-2 space-y-4">
+          {winners.map((winner) => {
             const date = new Date(winner.endedAt);
             const formatted = date.toLocaleDateString("en-GB", {
               year: "numeric",
@@ -63,24 +45,30 @@ export function Body() {
             });
 
             return (
-              <TableRow key={winner._id} className="border-[#b19155] ">
-                <TableCell className="font-medium text-[#b19155] border-[#b19155]">
-                  {winner.name}
-                </TableCell>
-                <TableCell className="text-[#b19155] border-[#b19155]">
-                  {winner.ticketNumber}
-                </TableCell>
-                <TableCell className="text-[#b19155] border-[#b19155]">
+              <div
+                key={winner._id}
+                className="bg-black border border-[#b19155] rounded-md text-[#b19155] overflow-hidden"
+              >
+                <div className="flex flex-col sm:flex-row">
+                  <div className="w-full sm:w-1/3 text-center py-2 border-b sm:border-b-0 sm:border-r border-[#b19155] font-semibold">
+                    {winner.name}
+                  </div>
+                  <div className="w-full sm:w-1/3 text-center py-2 border-b sm:border-b-0 sm:border-r border-[#b19155]">
+                    {winner.ticketNumber}
+                  </div>
+                  <div className="w-full sm:w-1/3 text-center py-2">
+                    {formatted}
+                  </div>
+                </div>
+                <div className="px-2 py-2 text-center text-base border-t border-[#b19155] break-words">
                   {winner.description}
-                </TableCell>
-                <TableCell className="text-right text-[#b19155] border-[#b19155]">
-                  {formatted}
-                </TableCell>
-              </TableRow>
+                </div>
+              </div>
             );
           })}
-        </TableBody>
-      </Table>
+        </div>
+      </div>
     </div>
   );
 }
+
