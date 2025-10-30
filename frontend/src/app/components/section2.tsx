@@ -55,36 +55,37 @@ export function Section2() {
       .then((data) => setData(data));
   }, []);
   // handleInputChange
-  const handleInputChange = (
-    id: number,
-    field: "phone" | "quantity",
-    value: string | number,
-    price?: number
-  ) => {
-    setFormState((prev) => {
-      let newQuantity = prev[id]?.quantity ?? 0;
+const handleInputChange = (
+  id: number,
+  field: "phone" | "quantity",
+  value: string | number,
+  price?: number
+) => {
+  setFormState((prev) => {
+    let newQuantity = prev[id]?.quantity ?? 0;
 
-      if (field === "quantity") {
-        // Хоосон үед quantity = 0
-        newQuantity =
-          value === "" || isNaN(Number(value)) || Number(value) <= 0
-            ? 0
-            : Number(value);
-      }
+    if (field === "quantity") {
+      // Хоосон үед quantity = 0
+      newQuantity =
+        value === "" || isNaN(Number(value)) || Number(value) <= 0
+          ? 0
+          : Math.min(Number(value), 100); // 👈 100-аас их байвал 100 болгож хязгаарлана
+    }
 
-      const totalAmount = price && newQuantity > 0 ? newQuantity * price : 0;
+    const totalAmount = price && newQuantity > 0 ? newQuantity * price : 0;
 
-      return {
-        ...prev,
-        [id]: {
-          ...prev[id],
-          [field]: field === "quantity" ? newQuantity : value,
-          quantity: newQuantity, // үргэлж тоо хадгална
-          totalAmount,
-        },
-      };
-    });
-  };
+    return {
+      ...prev,
+      [id]: {
+        ...prev[id],
+        [field]: field === "quantity" ? newQuantity : value,
+        quantity: newQuantity,
+        totalAmount,
+      },
+    };
+  });
+};
+
 
   const handleSubmit = async (id: number) => {
     try {
@@ -256,18 +257,25 @@ export function Section2() {
                         Тасалбарын тоо
                       </Label>
                       <Input
-                        id={`quantity-${item.id}`}
-                        type="number"
-                        value={quantity === 0 ? "" : quantity}
-                        onChange={(e) =>
-                          handleInputChange(
-                            item.id,
-                            "quantity",
-                            e.target.value,
-                            item.price
-                          )
-                        }
-                      />
+  id={`quantity-${item.id}`}
+  type="number"
+  value={quantity === 0 ? "" : quantity}
+  onChange={(e) =>
+    handleInputChange(
+      item.id,
+      "quantity",
+      e.target.value,
+      item.price
+    )
+  }
+  max={100}
+/>
+{quantity > 100 && (
+  <p className="text-red-500 text-sm mt-1">
+    100-аас их тасалбар авч болохгүй!
+  </p>
+)}
+
                     </div>
 
                     <div className="text-[#b19155] font-bold mt-2">
