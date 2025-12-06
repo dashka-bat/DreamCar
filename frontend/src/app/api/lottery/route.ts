@@ -48,7 +48,8 @@ export async function GET() {
   try {
     await connectToDatabase();
 
-    const lotteries = await Lottery.find({});
+  // Return lotteries sorted by creation date (newest first)
+  const lotteries = await Lottery.find({}).sort({ createdAt: -1 });
     return NextResponse.json(lotteries, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
