@@ -8,6 +8,7 @@ import { nanoid } from 'nanoid';
 export async function POST(request: Request) {
   try {
     await connectToDatabase();
+    //
 
     const data = await request.json();
     const {  name, createdAt, endedAt, price, totalNumber, active, winners } = data;
